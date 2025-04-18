@@ -2,7 +2,7 @@
 
 ## Sobre o app
 
-O **MyCycleApp** é um aplicativo móvel desenvolvido para facilitar a experiência de usuários que gostam de caminhar, pedalar ou explorar trilhas ao ar livre. A proposta é fornecer um catálogo de trilhas com informações detalhadas, mapas interativos e ferramentas úteis para planejamento e registro das atividades realizadas na natureza.
+O **Trail Adventures** é um aplicativo móvel desenvolvido para facilitar a experiência de usuários que gostam de caminhar, pedalar ou explorar trilhas ao ar livre. A proposta é fornecer um catálogo de trilhas com informações detalhadas, mapas interativos e registro das atividades realizadas na natureza.
 
 O app visa promover o contato com o meio ambiente, apoiar a prática de exercícios físicos e contribuir para o turismo sustentável.
 
@@ -35,7 +35,8 @@ As telas da aplicação foram desenhadas no Figma, com fluxo de navegação e la
 
 ## Modelagem do banco
 
-> A modelagem do banco será adicionada na próxima etapa. O app utilizará **SQLite** localmente com estrutura de repositórios.
+![image](https://github.com/user-attachments/assets/f44f9578-9e71-43e2-a4c4-3ef42b779d34)
+
 
 ---
 
