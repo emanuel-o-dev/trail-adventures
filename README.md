@@ -29,7 +29,7 @@ O app visa promover o contato com o meio ambiente, apoiar a prática de exercíc
 
 As telas da aplicação foram desenhadas no Figma, com fluxo de navegação e layout responsivo adaptado para dispositivos móveis.
 
-🔗 [Acessar protótipo no Figma](https://www.figma.com/design/IdEZSxX7lSY3DY8Br70Vq0/Mobile?node-id=0-1&p=f&t=Cuno5OlMwEpQLhMx-0)
+🔗 [Acessar protótipo no Figma](https://www.figma.com/design/IdEZSxX7lSY3DY8Br70Vq0/Mobile?node-id=0-1&t=WX9lTmJMc6pvk8rx-1)
 
 ---
 
