@@ -5,13 +5,15 @@ import SearchBar from "./SearchBar";
 
 export default function Maps() {
   return (
-    <View>
+    <View className="w-full relative">
       <Image
         source={require("../assets/maps.png")}
-        resizeMode="cover"
-        className="w-50"
+        style={{ height: 320, width: "100%" }}
+        PlaceholderContent={<Text>Loading...</Text>}
       />
-      <SearchBar />
+      <View className="absolute top-0 left-0 right-0 bottom-0 ">
+        <SearchBar />
+      </View>
     </View>
   );
 }
