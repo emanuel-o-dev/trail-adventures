@@ -1,0 +1,6 @@
+{
+    "tailwindStylesheet": "./resources/css/app.css",
+      "tailwindConfig": "./styles/tailwind.config.js",
+      "tailwindAttributes": ["className"]
+  }
+  
