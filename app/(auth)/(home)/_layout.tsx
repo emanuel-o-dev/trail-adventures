@@ -7,7 +7,10 @@ export default function _layout() {
     <SafeAreaProvider>
       <Stack>
         <Stack.Screen name="home" options={{ headerShown: false }} />
-        <Stack.Screen name="details" options={{ title: "Details" }} />
+        <Stack.Screen
+          name="details"
+          options={{ title: "Detalhes da trilha" }}
+        />
       </Stack>
     </SafeAreaProvider>
   );
