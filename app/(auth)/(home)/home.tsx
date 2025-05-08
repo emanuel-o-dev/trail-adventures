@@ -1,18 +1,15 @@
-import { View, StyleSheet } from "react-native";
 import React from "react";
-import Constants from "expo-constants";
-import { Text } from "@rneui/base";
 import useNavigationExitOnBack from "../../../hooks/useNavigationExitOnBack";
-import { Link } from "expo-router";
+import Maps from "../../../components/Maps";
+import TrailWrapper from "../../../components/TrailWrapper";
+import { View } from "react-native";
 export default function _screen() {
   useNavigationExitOnBack();
 
   return (
-    <View>
-      <Text h1>Home</Text>
-      <Link href="/(auth)/(home)/details">
-        <Text>Details</Text>
-      </Link>
+    <View className="flex-1">
+      <Maps />
+      <TrailWrapper />
     </View>
   );
 }

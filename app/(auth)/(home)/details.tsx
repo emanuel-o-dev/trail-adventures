@@ -1,10 +1,7 @@
-import { View, Text } from "react-native";
 import React from "react";
+import { useGlobalSearchParams } from "expo-router";
+import TrailCardFull from "../../../components/TrailCardFull";
 
 export default function details() {
-  return (
-    <View>
-      <Text>details</Text>
-    </View>
-  );
+  return <TrailCardFull />;
 }
