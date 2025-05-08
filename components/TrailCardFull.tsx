@@ -1,6 +1,8 @@
-import { View, Text } from "react-native";
+import { View, Text, ScrollView } from "react-native";
 import React from "react";
-import { Button } from "@rneui/themed";
+import { ButtonGroup, Image } from "@rneui/themed";
+import { useGlobalSearchParams } from "expo-router";
+import { useFetchTrailDetails } from "../hooks/useFecthTrailDetails";
 
 function handleSaveTrail() {
   // Function to handle saving the trail
@@ -8,27 +10,70 @@ function handleSaveTrail() {
   // Add your logic to save the trail here
   // For example, you could save it to a database or local storage
 }
-export default function TrailCard() {
-  const trail = {
-    name: "Trail Name",
-    difficulty: "Moderate",
-    time: "2 hours",
-    distance: "5 miles",
-    description:
-      "This is a long description of the trail. It includes details about the terrain, scenery, and any other relevant information.",
-  };
-  return (
-    // Card component to display trail information
-    <View className="bg-zinc-800 rounded-lg p-4 m-2 shadow-md">
-      <Text className="text-white text-lg font-bold">{trail.name}</Text>
-      <View className="flex-row justify-between mt-2">
-        <Text className="text-gray-500">Dificuldade: {trail.difficulty}</Text>
-        <Text className="text-gray-500">Tempo estimado: {trail.time}</Text>
-        <Text className="text-gray-500">Percurso: {trail.distance}</Text>
-      </View>
-      <Text className="text-gray-400">Trail Description</Text>
+export default function TrailCardFull() {
+  const { id } = useGlobalSearchParams();
 
-      <Button title={"Marcar como concluído"} onPress={handleSaveTrail} />
+  const { trail } = useFetchTrailDetails(id as string);
+
+  return (
+    <View className="flex-1 bg-zinc-900 w-full">
+      <Image
+        source={trail?.image || require("../assets/mountain.png")}
+        style={{ height: 320, width: "100%" }}
+        PlaceholderContent={<Text>Loading...</Text>}
+      />
+      <ScrollView
+        className="flex-1 p-8 mt-3"
+        showsVerticalScrollIndicator={false}
+        contentContainerStyle={{ paddingBottom: 100 }}
+      >
+        <Text className="text-white text-3xl font-bold">{trail?.name}</Text>
+        <View className="bg-zinc-900 rounded-lg shadow-md">
+          <Text className="text-gray-300 text-lg  mt-2">
+            Dificuldade: {trail?.difficulty}
+          </Text>
+          <Text className="text-gray-400 text-lg">
+            Tempo estimado: {trail?.time}
+          </Text>
+          <Text className="text-gray-400 text-lg">
+            Percurso: {trail?.distance}
+          </Text>
+        </View>
+        <Text className="text-gray-400 text-lg mt-2">Tipo: {trail?.type}</Text>
+        <Text className="text-gray-300 text-lg mt-2">
+          Localização: {trail?.location}
+        </Text>
+        <Text className="text-white mt-2 text-lg">{trail?.description}</Text>
+
+        <View className="flex-auto mt-safe-offset-20">
+          <ButtonGroup
+            buttons={["Salvar", "Navegar"]}
+            containerStyle={{
+              height: 50,
+              gap: 10,
+              backgroundColor: "transparent",
+              borderColor: "transparent",
+            }}
+            buttonContainerStyle={{
+              borderRadius: 10,
+              backgroundColor: "#fff",
+            }}
+            selectedButtonStyle={{
+              backgroundColor: "#2563EB",
+              borderRadius: 10,
+            }}
+            selectedIndex={1}
+            onPress={(index) => {
+              if (index === 0) {
+                handleSaveTrail();
+              } else if (index === 1) {
+                // Handle to rediredect to the map
+                console.log("Start trail!");
+              }
+            }}
+          />
+        </View>
+      </ScrollView>
     </View>
   );
 }
