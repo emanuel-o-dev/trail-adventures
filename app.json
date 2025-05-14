@@ -25,7 +25,10 @@
       "favicon": "./assets/map.svg",
       "bundler": "metro"
     },
-    "plugins": ["expo-router"],
+    "plugins": [
+      "expo-router",
+      "expo-sqlite"
+    ],
     "scheme": "trail-adventures"
   }
 }
