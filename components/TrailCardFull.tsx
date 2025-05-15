@@ -2,7 +2,6 @@ import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import { ButtonGroup, Image } from "@rneui/themed";
 import { useGlobalSearchParams } from "expo-router";
-import { useFetchTrailDetails } from "../hooks/useFecthTrailDetails";
 
 function handleSaveTrail() {
   // Function to handle saving the trail
@@ -13,7 +12,17 @@ function handleSaveTrail() {
 export default function TrailCardFull() {
   const { id } = useGlobalSearchParams();
 
-  const { trail } = useFetchTrailDetails(id as string);
+  const trail = {
+    id: id,
+    name: "Trail Name",
+    description: "Trail Description",
+    location: "Trail Location",
+    difficulty: "Trail Difficulty",
+    distance: "Trail Distance",
+    time: "Trail Time",
+    type: "Trail Type",
+    image: require("../assets/mountain.png"),
+  };
 
   return (
     <View className="flex-1 bg-zinc-900 w-full">

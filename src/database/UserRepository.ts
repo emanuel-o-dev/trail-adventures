@@ -6,35 +6,35 @@ export default class UserRepository {
     this.up();
   }
 
-  public async up() {
-    await db.runAsync(
+  public up() {
+    db.runSync(
       "CREATE TABLE IF NOT EXISTS users (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT, email TEXT UNIQUE, password TEXT, created_at DATE, updated_at DATE);",
     );
   }
-  public async down() {
-    await db.runAsync("DROP TABLE users;");
+  public down() {
+    db.runSync("DROP TABLE users;");
   }
 
-  public async create(user: IUser) {
+  public create(user: IUser) {
     const { name, email, password } = user;
     const createdAt = new Date().toISOString();
     const updatedAt = new Date().toISOString();
-    await db.runAsync(
+    db.runSync(
       "INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?);",
       [name, email, password, createdAt, updatedAt],
     );
   }
-  public async update(user: IUser) {
+  public update(user: IUser) {
     const { id, name, email, password } = user;
     const updatedAt = new Date().toISOString();
-    await db.runAsync(
+    db.runSync(
       "UPDATE users SET name = ?, email = ?, password = ?, updated_at = ? WHERE id = ?;",
       [name, email, password, updatedAt, id],
     );
   }
 
-  public async findById(id: string) {
-    const result = await db.getFirstAsync<IUser>(
+  public findById(id: string) {
+    const result = db.getFirstSync<IUser>(
       "SELECT * FROM trails WHERE id = ?;",
       [id],
     );
