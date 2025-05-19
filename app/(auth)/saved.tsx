@@ -7,12 +7,19 @@ export default function saved() {
   const fecthData = async () => {
     console.log("test");
     const repository = new TrailRepository();
-    const trails = await repository.all();
+    const trails = repository.all();
+    console.log(trails);
+  };
+  const deleteData = async () => {
+    console.log("delete");
+    const repository = new TrailRepository();
+    const trails = repository.down();
     console.log(trails);
   };
   return (
     <View>
       <Button onPress={fecthData} title={"Test"} />
+      <Button onPress={deleteData} title={"Delete"} />
     </View>
   );
 }
