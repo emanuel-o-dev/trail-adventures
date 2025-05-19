@@ -1,10 +1,14 @@
 export interface ITrailFull {
-  id: string;
+  id: number;
   name: string;
   difficulty: string;
-  time: string;
-  type: string;
+  duration: string;
+  terrain: string;
   distance: string;
+  coordinates: {
+    latitude: number;
+    longitude: number;
+  };
   image: string;
   description: string;
   location: string;

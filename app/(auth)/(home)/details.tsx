@@ -1,7 +1,9 @@
 import React from "react";
-import { useGlobalSearchParams } from "expo-router";
 import TrailCardFull from "../../../components/TrailCardFull";
+import { useGlobalSearchParams } from "expo-router";
 
 export default function details() {
-  return <TrailCardFull />;
+  const { id } = useGlobalSearchParams();
+
+  return <TrailCardFull id={Number(id)} />;
 }
