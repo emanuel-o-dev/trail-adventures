@@ -9,7 +9,7 @@ export interface ITrailFull {
     latitude: number;
     longitude: number;
   };
-  image?: string;
+  image: string;
   description: string;
   location: string;
   createdAt?: string;

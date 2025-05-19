@@ -86,8 +86,7 @@ export default class TrailRepository {
         terrain,
         distance,
         duration,
-        image ??
-          "https://images.pexels.com/photos/18724059/pexels-photo-18724059.jpeg",
+        image,
       ],
     );
     return runResult.changes > 0;

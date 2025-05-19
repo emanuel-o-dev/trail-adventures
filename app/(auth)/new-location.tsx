@@ -15,6 +15,7 @@ import { Button, Icon } from "@rneui/themed";
 import TrailRepository from "../../src/database/TrailRepository";
 import { ITrailFull } from "../../interfaces/ITrailFull.interface";
 import { useState } from "react";
+import ImagePickerInput from "../../components/ImagePickerInput";
 
 export default function NewLocation() {
   const [name, setName] = useState("");
@@ -24,6 +25,7 @@ export default function NewLocation() {
   const [description, setDescription] = useState("");
   const [terrain, setTerrainType] = useState("");
   const [difficulty, setDifficulty] = useState<ITrailDifficulty | null>(null);
+  const [imageUri, setImageUri] = useState<string>("");
 
   const clean = () => {
     setName("");
@@ -31,6 +33,9 @@ export default function NewLocation() {
     setDescription("");
     setTerrainType("");
     setDifficulty(null);
+    setDuration("");
+    setDistance("");
+    setImageUri("");
   };
   const handleSubmit = () => {
     if (!name || !location || !description || !terrain || !difficulty) {
@@ -46,6 +51,7 @@ export default function NewLocation() {
       description,
       terrain,
       difficulty: difficulty.difficulty, // ou difficulty.seq, depende de como vai salvar
+      image: imageUri,
     };
 
     try {
@@ -130,6 +136,8 @@ export default function NewLocation() {
             value={distance}
             onChangeText={setDistance}
           />
+
+          <ImagePickerInput value={imageUri} onChange={setImageUri} />
 
           <View style={styles.buttonWrapper}>
             <Button
