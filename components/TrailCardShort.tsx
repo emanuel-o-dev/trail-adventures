@@ -17,7 +17,9 @@ const TrailCardShort = forwardRef<typeof Pressable, TrailCardShortProps>(
         className="bg-zinc-800 rounded-lg p-4 m-2 gap-4 shadow-md justify-start w-full"
       >
         <Image
-          source={trail.image || require("../assets/mountain.png")}
+          source={{
+            uri: trail.image,
+          }}
           style={{ height: 200, width: "100%" }}
           PlaceholderContent={<Text>Loading...</Text>}
         />
@@ -29,9 +31,9 @@ const TrailCardShort = forwardRef<typeof Pressable, TrailCardShortProps>(
             <Text className="text-gray-300"> {trail.distance}</Text>
           </View>
           <View className="flex-row gap-3 mt-2">
-            <Text className="text-gray-100">{trail.type}</Text>
+            <Text className="text-gray-100">{trail.terrain}</Text>
             <Divider color="white" className="w-3 self-center" />
-            <Text className="text-gray-300">{trail.time}</Text>
+            <Text className="text-gray-300">{trail.duration}</Text>
           </View>
         </View>
       </Pressable>

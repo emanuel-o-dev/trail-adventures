@@ -1,24 +1,27 @@
-import React, { useCallback, useRef, useMemo, useState } from "react";
+import React, { useCallback, useRef, useMemo } from "react";
 import { View } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
-import TrailCardShort from "./TrailCardShort";
 import { Link, useRouter } from "expo-router";
 import { ITrailShort } from "../interfaces/ITrailShort.interface";
-import { useFetchTrailList } from "../hooks/useFetchTrailList";
-import { trailsMock } from "../mocks/trailShort";
-// import { useSQLitePopulate } from "../hooks/useSQLitePopulate";
+import TrailCardShort from "./TrailCardShort";
+import { useAsyncData } from "../hooks/useAsyncData";
+import TrailRepository from "../src/database/TrailRepository";
 
 export default function TrailWrapper() {
-  // hooks
   const sheetRef = useRef<BottomSheet>(null);
-  // useSQLitePopulate();
-  const { trailList } = useFetchTrailList();
-  console.log(trailList);
+  const router = useRouter();
+
+  const { trails = [], loading } = useAsyncData<{ trails: ITrailShort[] }>(
+    async () => {
+      const repository = new TrailRepository();
+      const trails = repository.all(); // essa função é síncrona
+      return { trails };
+    },
+  );
 
   const snapPoints = useMemo(() => ["30%", "60%", "90%"], []);
 
-  // callbacks
   const handleSheetChange = useCallback((index: number) => {
     if (index === 0) {
       handleClosePress();
@@ -28,17 +31,16 @@ export default function TrailWrapper() {
 
   const handleClosePress = useCallback(() => {
     console.log("close press");
+    // você pode fechar o sheet manualmente com: sheetRef.current?.close();
   }, []);
-  const router = useRouter();
 
-  // render
   const renderItem = useCallback(
     ({ item }: { item: ITrailShort }) => (
       <View>
         <Link
           href={{
             pathname: "/(auth)/(home)/details",
-            params: { id: item.id },
+            params: { id: item.id.toString() }, // garantindo string
           }}
           asChild
         >
@@ -46,8 +48,10 @@ export default function TrailWrapper() {
         </Link>
       </View>
     ),
-    [router],
+    [],
   );
+
+  if (loading) return loading;
 
   return (
     <BottomSheet
@@ -76,8 +80,8 @@ export default function TrailWrapper() {
       }}
     >
       <BottomSheetFlatList
-        data={trailsMock}
-        keyExtractor={(item) => item.id}
+        data={trails}
+        keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}
       />

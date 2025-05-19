@@ -12,7 +12,7 @@ import { ZodError } from "zod";
 
 export function useAsyncData<T>(
   onLoad: () => Promise<T>,
-  deps?: React.DependencyList
+  deps?: React.DependencyList,
 ) {
   const [data, setData] = useState<{ content?: T; loading: ReactNode | null }>({
     content: undefined,
@@ -38,17 +38,6 @@ export function useAsyncData<T>(
       });
     }
   };
-  // onLoad()
-  //   .then((content) => {
-  //     Log.i("refreshing...");
-  //     setData({ content, loading: null });
-  //   })
-  //   .catch((error) =>
-  //     setData({
-  //       content: undefined,
-  //       loading: <AsyncDataLoading hasError={error} />,
-  //     })
-  //   );
 
   useEffect(() => {
     refresh();
