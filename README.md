@@ -15,7 +15,7 @@ O app visa promover o contato com o meio ambiente, apoiar a prática de exercíc
 
 ### Funcionalidades previstas
 
-- [ ] Listagem de trilhas com informações (nome, localização, dificuldade, descrição)
+- [X] Listagem de trilhas com informações (nome, localização, dificuldade, descrição)
 - [ ] Visualização da trilha em mapa com rota
 - [ ] Marcar trilha como concluída
 - [ ] Favoritar trilhas para acesso rápido
@@ -63,11 +63,11 @@ O desenvolvimento do MyCycleApp foi dividido em 4 sprints semanais, com foco em 
 
 ### 🟡 Sprint 2 – Estrutura técnica e listagem de trilhas (Semana 2)
 
-- [ ] Configurar ambiente Expo  
-- [ ] Criar navegação entre telas (Expo Router)  
-- [ ] Implementar a tela de listagem de trilhas  
-- [ ] Integrar SQLite com dados mockados de trilhas  
-- [ ] Criar tela de detalhes da trilha  
+- [X] Configurar ambiente Expo  
+- [X] Criar navegação entre telas (Expo Router)  
+- [X] Implementar a tela de listagem de trilhas  
+- [X] Integrar SQLite com dados mockados de trilhas  
+- [X] Criar tela de detalhes da trilha  
 
 > **Meta da Sprint:** Permitir ao usuário visualizar e explorar trilhas salvas localmente.
 
