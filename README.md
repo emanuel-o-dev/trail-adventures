@@ -5,7 +5,8 @@
 O **Trail Adventures** é um aplicativo móvel desenvolvido para facilitar a experiência de usuários que gostam de caminhar, pedalar ou explorar trilhas ao ar livre. A proposta é fornecer um catálogo de trilhas com informações detalhadas, mapas interativos e registro das atividades realizadas na natureza.
 
 O app visa promover o contato com o meio ambiente, apoiar a prática de exercícios físicos e contribuir para o turismo sustentável.
-
+## Video primeira versão (ainda em trabalho)
+[Youtube - TrailAdventures](https://youtu.be/RwqUA4QocrA)
 ### Funcionalidades básicas (prioritárias)
 
 - [x] Criação do repositório e estruturação inicial
