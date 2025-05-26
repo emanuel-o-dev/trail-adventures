@@ -50,7 +50,7 @@ export default function TrailCardFull({ id }: { id: number }) {
         </Text>
         <Text className="text-white mt-2 text-lg">{trail.description}</Text>
 
-        <ScrollView className="flex-auto mt-4">
+        <View className="flex-auto mt-4">
           <ButtonGroup
             buttons={["Salvar", "Navegar"]}
             containerStyle={{
@@ -76,7 +76,7 @@ export default function TrailCardFull({ id }: { id: number }) {
               }
             }}
           />
-        </ScrollView>
+        </View>
       </ScrollView>
     </SafeAreaView>
   );
