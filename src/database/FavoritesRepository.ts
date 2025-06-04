@@ -1,10 +1,11 @@
+import { ITrailSaved } from "../../interfaces/ITrailSaved";
 import db from "./SQLiteDatabase";
 
 export type Favorites = {
   id?: number;
   user_id: string;
   trail_id: string;
-  created_at: Date;
+  created_at?: string;
 };
 
 export default class FavoriteRepository {
@@ -32,17 +33,25 @@ export default class FavoriteRepository {
 
   public deleteById(favorite: Favorites) {
     const { user_id, trail_id } = favorite;
-    db.runSync("DELETE FROM favorites WHERE user_id = ? AND trail_id = ?;", [
-      user_id,
-      trail_id,
-    ]);
+    return (
+      db.runSync("DELETE FROM favorites WHERE user_id = ? AND trail_id = ?;", [
+        user_id,
+        trail_id,
+      ]).changes > 0
+    );
   }
-  public getSavedTrails(user_id: string) {
-    const result = db.getAllSync<Favorites>(
-      "SELECT * FROM favorites WHERE user_id = ?;",
+  public getSavedTrails(user_id: string): ITrailSaved[] {
+    const trails = db.getAllSync<ITrailSaved>(
+      `
+    SELECT t.id, t.name, t.location, f.created_at AS dateVisited 
+    FROM favorites f
+    JOIN trails t ON f.trail_id = t.id
+    WHERE f.user_id = ?
+    ORDER BY f.created_at DESC;
+    `,
       [user_id],
     );
-    return result;
+    return trails;
   }
   public clearSavedTrails(user_id: string) {
     try {
