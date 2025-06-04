@@ -5,12 +5,11 @@ import useNavigationExitOnBack from "../hooks/useNavigationExitOnBack";
 import { useState } from "react";
 import UserRepository from "../src/database/UserRepository";
 import useUserStore from "../states/useUser";
-import { set } from "zod";
 
 export default function _screen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const { setUser, getUser } = useUserStore();
+  const [email, setEmail] = useState("test@test.com");
+  const [password, setPassword] = useState("123456");
+  const { setUser } = useUserStore();
 
   const userRepository = new UserRepository();
   useNavigationExitOnBack();
