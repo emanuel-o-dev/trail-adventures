@@ -30,18 +30,27 @@ export default class FavoriteRepository {
     );
   }
 
-  public delete(favorite: Favorites) {
+  public deleteById(favorite: Favorites) {
     const { user_id, trail_id } = favorite;
     db.runSync("DELETE FROM favorites WHERE user_id = ? AND trail_id = ?;", [
       user_id,
       trail_id,
     ]);
   }
-  public all(user_id: string) {
+  public getSavedTrails(user_id: string) {
     const result = db.getAllSync<Favorites>(
       "SELECT * FROM favorites WHERE user_id = ?;",
       [user_id],
     );
     return result;
+  }
+  public clearSavedTrails(user_id: string) {
+    try {
+      db.runSync("DELETE FROM favorites WHERE user_id = ?;", [user_id]);
+      return true;
+    } catch (error) {
+      console.error("Error clearing saved trails:", error);
+      return false;
+    }
   }
 }
