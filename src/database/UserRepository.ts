@@ -99,7 +99,7 @@ export default class UserRepository {
       favaoriteRepository.create({
         user_id: userId.toString(),
         trail_id: trailId.toString(),
-        created_at: new Date(),
+        created_at: new Date().toISOString(),
       });
       return true;
     } catch (error) {

@@ -8,11 +8,13 @@ import UserRepository from "../src/database/UserRepository";
 import useUserStore from "../states/useUser";
 
 export default function TrailCardFull({ id }: { id: number }) {
-  const { trail, loading } = useAsyncData<{ trail: ITrailFull }>(async () => {
-    const repository = new TrailRepository();
-    const trail = repository.findById(id);
-    return { trail };
-  });
+  const { trail, loading, refresh } = useAsyncData<{ trail: ITrailFull }>(
+    async () => {
+      const repository = new TrailRepository();
+      const trail = repository.findById(id);
+      return { trail };
+    },
+  );
   const { getUser } = useUserStore();
 
   const handleSaveTrail = async () => {
@@ -29,6 +31,7 @@ export default function TrailCardFull({ id }: { id: number }) {
     const repository = new UserRepository();
     const saved = repository.saveTrail(user.id, trail.id);
     if (saved) {
+      refresh(); // Refresh the trail data to reflect the saved state
       alert("Trilha salva com sucesso!");
     } else {
       alert("Erro ao salvar a trilha. Tente novamente.");
