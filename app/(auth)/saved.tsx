@@ -1,26 +1,27 @@
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import React from "react";
 import { Button } from "@rneui/base";
-import TrailRepository from "../../src/database/TrailRepository";
 import UserRepository from "../../src/database/UserRepository";
+import FavoriteRepository from "../../src/database/FavoritesRepository";
+import useUserStore from "../../states/useUser";
 
 export default function saved() {
-  const fecthData = async () => {
-    console.log("test");
-    const repository = new UserRepository();
-    const trails = repository.all();
-    console.log(trails);
+  const { getUser } = useUserStore();
+  const userId = getUser()?.id.toString();
+  const fetchData = async () => {
+    console.log("Fetching saved trails...");
+    const repository = new FavoriteRepository();
+    if (!userId) {
+      console.log("User not logged in. Cannot fetch saved trails.");
+      return;
+    }
+    const savedTrails = repository.getSavedTrails(userId);
+    console.log(savedTrails);
   };
-  const deleteData = async () => {
-    console.log("delete");
-    const repository = new UserRepository();
-    const trails = repository.down();
-    console.log(trails);
-  };
+
   return (
     <View>
-      <Button onPress={fecthData} title={"Test"} />
-      <Button onPress={deleteData} title={"Delete"} />
+      <Button onPress={fetchData} title={"Fetch Saved Trails"} />
     </View>
   );
 }
