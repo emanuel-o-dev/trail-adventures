@@ -37,7 +37,7 @@ export default function _layout() {
         <Tabs.Screen
           name="saved"
           options={{
-            headerShown: false,
+            headerShown: true,
             tabBarIcon: () => (
               <Icon
                 type="feather"
@@ -45,7 +45,7 @@ export default function _layout() {
                 color={theme.colors.primary}
               />
             ),
-            title: "Saved",
+            title: "Trilhas Salvas",
           }}
         />
         <Tabs.Screen
