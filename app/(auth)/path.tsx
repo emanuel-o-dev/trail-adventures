@@ -19,9 +19,10 @@ export default function path() {
     console.log(trails);
   };
   const fecthDataSaved = async () => {
-    const { getUser } = useUserStore();
     const repository = new FavoriteRepository();
-    const userId = getUser()?.id.toString();
+    const { getUser } = useUserStore();
+    const userId = getUser()?.id;
+    console.log("fetch saved");
     if (!userId) {
       console.log("User not logged in. Cannot fetch saved trails.");
       return null;
@@ -39,7 +40,7 @@ export default function path() {
     <View>
       <Button onPress={fecthData} title={"Test"} />
       <Button onPress={deleteData} title={"Delete"} />
-      <Button onPress={fecthDataSaved} title={"Saved"} />
+      <Button onPress={fecthDataSaved} title={"Saved now"} />
       <Button onPress={deleteDataSaved} title={"Delete Saved"} />
     </View>
   );
