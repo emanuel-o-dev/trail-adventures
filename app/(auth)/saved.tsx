@@ -1,39 +1,38 @@
 import { FlatList, View } from "react-native";
-import React from "react";
-import { Button, Text } from "@rneui/base";
-import FavoriteRepository from "../../src/database/FavoritesRepository";
+import React, { useEffect } from "react";
+import { Text } from "@rneui/base";
 import useUserStore from "../../states/useUser";
+import useSavedTrails from "../../states/useSavedTrails";
 import TrailCardSaved from "../../components/TrailCardSaved";
 
-export default function saved() {
-  function fetchSavedTrails() {
-    const { getUser } = useUserStore();
-    const repository = new FavoriteRepository();
-    const userId = getUser()?.id.toString();
-    if (!userId) {
-      console.log("Usuario não logado. Não é possível buscar trilhas salvas.");
-      return null;
+export default function SavedScreen() {
+  const { getUser } = useUserStore();
+  const userId = getUser()?.id;
+  const { trails, loadTrails } = useSavedTrails();
+
+  useEffect(() => {
+    if (userId) {
+      loadTrails(userId); // carregar trilhas salvas no início
     }
-    const savedTrails = repository.getSavedTrails(userId);
-    return savedTrails;
-  }
-  const savedTrails = fetchSavedTrails();
-  if (!savedTrails || savedTrails.length === 0) {
+  }, [userId]);
+
+  if (!trails || trails.length === 0) {
     return (
       <View className="flex-1 items-center justify-center">
-        <Text h1 />
         <Text h4>Você não tem trilhas salvas</Text>
       </View>
     );
   }
 
   return (
-    <View>
+    <View className="flex-1 p-4 bg-white">
       <FlatList
-        data={savedTrails}
-        keyExtractor={(item) => item.dateVisited?.toString() || ""}
+        data={trails}
+        keyExtractor={(item) =>
+          item.dateVisited?.toString() || item.id.toString()
+        }
         renderItem={({ item }) => <TrailCardSaved trail={item} />}
-      ></FlatList>
+      />
     </View>
   );
 }

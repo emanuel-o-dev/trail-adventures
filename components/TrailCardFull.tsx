@@ -1,44 +1,50 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ButtonGroup, Image } from "@rneui/themed";
 import TrailRepository from "../src/database/TrailRepository";
 import { ITrailFull } from "../interfaces/ITrailFull.interface";
 import { useAsyncData } from "../hooks/useAsyncData";
 import UserRepository from "../src/database/UserRepository";
-import useUserStore from "../states/useUser";
+import useUser from "../states/useUser";
+import useSavedTrails from "../states/useSavedTrails";
 
 export default function TrailCardFull({ id }: { id: number }) {
-  const { trail, loading, refresh } = useAsyncData<{ trail: ITrailFull }>(
-    async () => {
-      const repository = new TrailRepository();
-      const trail = repository.findById(id);
-      return { trail };
-    },
-  );
-  const { getUser } = useUserStore();
+  const { trail, loading } = useAsyncData<{ trail: ITrailFull }>(async () => {
+    const repository = new TrailRepository();
+    const trail = repository.findById(id);
+    return { trail };
+  });
+  const userId = Number(useUser().getUser()?.id);
+  const { loadTrails, addTrail } = useSavedTrails();
+
+  useEffect(() => {
+    if (userId) {
+      loadTrails(userId);
+    }
+  }, [userId]);
 
   const handleSaveTrail = async () => {
-    const user = getUser();
-    if (!user) {
-      alert("Você precisa estar logado para salvar uma trilha.");
-      return;
-    }
-    if (!trail.id) {
-      alert("Trilha não encontrada.");
-      return;
-    }
-
     const repository = new UserRepository();
-    const saved = repository.saveTrail(user.id, trail.id);
+    const saved = repository.saveTrail(userId, Number(trail.id));
     if (saved) {
-      refresh(); // Refresh the trail data to reflect the saved state
+      addTrail({
+        id: Number(trail.id),
+        name: trail.name,
+        location: trail.location,
+        dateVisited: new Date().toISOString(), // ou outro valor que você tiver
+      });
       alert("Trilha salva com sucesso!");
     } else {
       alert("Erro ao salvar a trilha. Tente novamente.");
     }
   };
-
-  if (loading) return <Text className="text-white p-4">Carregando...</Text>;
+  if (loading) {
+    return (
+      <SafeAreaView className="flex-1 bg-zinc-900 items-center justify-center">
+        <Text className="text-white">Carregando...</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">

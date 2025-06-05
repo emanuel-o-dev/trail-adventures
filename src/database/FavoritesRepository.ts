@@ -3,8 +3,8 @@ import db from "./SQLiteDatabase";
 
 export type Favorites = {
   id?: number;
-  user_id: string;
-  trail_id: string;
+  user_id: number;
+  trail_id: number;
   created_at?: string;
 };
 
@@ -40,7 +40,7 @@ export default class FavoriteRepository {
       ]).changes > 0
     );
   }
-  public getSavedTrails(user_id: string): ITrailSaved[] {
+  public getSavedTrails(user_id: number): ITrailSaved[] {
     const trails = db.getAllSync<ITrailSaved>(
       `
     SELECT t.id, t.name, t.location, f.created_at AS dateVisited 

@@ -1,5 +1,5 @@
 export interface ITrailSaved {
-  id: string;
+  id: number;
   name: string;
   location: string;
   dateVisited: string;

@@ -30,7 +30,6 @@ export default function TrailWrapper() {
 
   const handleClosePress = useCallback(() => {
     console.log("close press");
-    // você pode fechar o sheet manualmente com: sheetRef.current?.close();
   }, []);
 
   const renderItem = useCallback(
@@ -38,8 +37,8 @@ export default function TrailWrapper() {
       <View>
         <Link
           href={{
-            pathname: "/(auth)/(home)/details",
-            params: { id: item.id.toString() }, // garantindo string
+            pathname: "/(auth)/(home)/[id]",
+            params: { id: item.id.toString() },
           }}
           asChild
         >
