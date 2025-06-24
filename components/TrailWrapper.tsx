@@ -3,7 +3,7 @@ import { View } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
 import { Link } from "expo-router";
-import { ITrailShort } from "../interfaces/ITrailShort.interface";
+import { TrailShort } from "../schemas/TrailShort";
 import TrailCardShort from "./TrailCardShort";
 import { useAsyncData } from "../hooks/useAsyncData";
 import TrailRepository from "../src/database/TrailRepository";
@@ -11,7 +11,7 @@ import TrailRepository from "../src/database/TrailRepository";
 export default function TrailWrapper() {
   const sheetRef = useRef<BottomSheet>(null);
 
-  const { trails = [], loading } = useAsyncData<{ trails: ITrailShort[] }>(
+  const { trails = [], loading } = useAsyncData<{ trails: TrailShort[] }>(
     async () => {
       const repository = new TrailRepository();
       const trails = repository.all();
@@ -33,7 +33,7 @@ export default function TrailWrapper() {
   }, []);
 
   const renderItem = useCallback(
-    ({ item }: { item: ITrailShort }) => (
+    ({ item }: { item: TrailShort }) => (
       <View>
         <Link
           href={{

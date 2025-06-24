@@ -1,4 +1,4 @@
-import { IUser } from "../../interfaces/IUser.interface";
+import { IUser } from "../../schemas/User";
 import FavoriteRepository from "./FavoritesRepository";
 import db from "./SQLiteDatabase";
 

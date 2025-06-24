@@ -10,10 +10,10 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItemAcordion from "../../components/ListItemAccordion";
 import InputForm from "../../components/InputForm";
-import { ITrailDifficulty } from "../../interfaces/ITrailDifficulty";
+import { TrailDifficulty } from "../../schemas/TrailDifficulty";
 import { Button, Icon } from "@rneui/themed";
 import TrailRepository from "../../src/database/TrailRepository";
-import { ITrailFull } from "../../interfaces/ITrailFull.interface";
+import { TrailFull } from "../../schemas/TrailFull";
 import { useState } from "react";
 import ImagePickerInput from "../../components/ImagePickerInput";
 
@@ -24,7 +24,7 @@ export default function NewLocation() {
   const [distance, setDistance] = useState("");
   const [description, setDescription] = useState("");
   const [terrain, setTerrainType] = useState("");
-  const [difficulty, setDifficulty] = useState<ITrailDifficulty | null>(null);
+  const [difficulty, setDifficulty] = useState<TrailDifficulty | null>(null);
   const [imageUri, setImageUri] = useState<string>("");
 
   const clean = () => {
@@ -43,15 +43,17 @@ export default function NewLocation() {
       return;
     }
 
-    const newTrail: ITrailFull = {
+    const newTrail: TrailFull = {
+      id: 0, // Auto-incremented by the database
       name,
       location,
       duration,
       distance,
       description,
       terrain,
-      difficulty: difficulty.difficulty, // ou difficulty.seq, depende de como vai salvar
+      difficulty: difficulty.difficulty,
       image: imageUri,
+      createdAt: new Date().toISOString(),
     };
 
     try {

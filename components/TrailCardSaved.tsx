@@ -1,14 +1,14 @@
 import React, { useEffect } from "react";
 import { StyleSheet, View } from "react-native";
-import { ITrailSaved } from "../interfaces/ITrailSaved";
+import { TrailSaved } from "../schemas/TrailSaved";
 import { Button, Text } from "@rneui/base";
 import useUser from "../states/useUser";
 import FavoriteRepository from "../src/database/FavoritesRepository";
 import useSavedTrails from "../states/useSavedTrails";
 
-export default function TrailCardSaved({ trail }: { trail: ITrailSaved }) {
+export default function TrailCardSaved({ trail }: { trail: TrailSaved }) {
   const userId = Number(useUser().getUser()?.id);
-  const { trails, loadTrails, removeTrail } = useSavedTrails();
+  const { loadTrails, removeTrail } = useSavedTrails();
 
   useEffect(() => {
     if (userId) {

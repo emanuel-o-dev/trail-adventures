@@ -1,4 +1,4 @@
-import { ITrailSaved } from "../../interfaces/ITrailSaved";
+import { ITrailSaved } from "../../schemas/TrailSaved";
 import db from "./SQLiteDatabase";
 
 export type Favorites = {

@@ -2,7 +2,7 @@ import { View, Text, StyleSheet } from "react-native";
 import React from "react";
 import { ListItem } from "@rneui/themed";
 import { useAsyncData } from "../hooks/useAsyncData";
-import { ITrailDifficulty } from "../interfaces/ITrailDifficulty";
+import { ITrailDifficulty } from "../schemas/ITrailDifficulty";
 import TrailRepository from "../src/database/TrailRepository";
 
 type ListItemAcordionProps = {

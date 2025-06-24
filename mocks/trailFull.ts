@@ -1,6 +1,6 @@
-import { ITrailFull } from "../interfaces/ITrailFull.interface";
+import { TrailFull } from "../schemas/TrailFull";
 
-export const trailsMock: ITrailFull[] = [
+export const trailsMock: TrailFull[] = [
   {
     id: 1,
     name: "Trilha da Chapada Diamantina",

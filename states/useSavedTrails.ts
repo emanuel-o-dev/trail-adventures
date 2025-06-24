@@ -1,13 +1,13 @@
 // states/useSavedTrails.ts
 import { create } from "zustand";
 import FavoriteRepository from "../src/database/FavoritesRepository";
-import { ITrailSaved } from "../interfaces/ITrailSaved";
+import { TrailSaved } from "../schemas/TrailSaved";
 
 interface SavedTrailsState {
-  trails: ITrailSaved[];
+  trails: TrailSaved[];
   loadTrails: (userId: number) => void;
   removeTrail: (trailId: number) => void;
-  addTrail: (trail: ITrailSaved) => void;
+  addTrail: (trail: TrailSaved) => void;
 }
 
 const useSavedTrails = create<SavedTrailsState>((set) => ({
