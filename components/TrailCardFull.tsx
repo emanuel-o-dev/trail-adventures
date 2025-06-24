@@ -1,13 +1,12 @@
 import { View, Text, ScrollView, SafeAreaView } from "react-native";
-import React from "react";
+import React, { useEffect } from "react";
 import { ButtonGroup, Image } from "@rneui/themed";
 import TrailRepository from "../src/database/TrailRepository";
 import { ITrailFull } from "../interfaces/ITrailFull.interface";
 import { useAsyncData } from "../hooks/useAsyncData";
-
-function handleSaveTrail() {
-  console.log("Trail saved!");
-}
+import UserRepository from "../src/database/UserRepository";
+import useUser from "../states/useUser";
+import useSavedTrails from "../states/useSavedTrails";
 
 export default function TrailCardFull({ id }: { id: number }) {
   const { trail, loading } = useAsyncData<{ trail: ITrailFull }>(async () => {
@@ -15,8 +14,37 @@ export default function TrailCardFull({ id }: { id: number }) {
     const trail = repository.findById(id);
     return { trail };
   });
+  const userId = Number(useUser().getUser()?.id);
+  const { loadTrails, addTrail } = useSavedTrails();
 
-  if (loading) return <Text className="text-white p-4">Carregando...</Text>;
+  useEffect(() => {
+    if (userId) {
+      loadTrails(userId);
+    }
+  }, [userId]);
+
+  const handleSaveTrail = async () => {
+    const repository = new UserRepository();
+    const saved = repository.saveTrail(userId, Number(trail.id));
+    if (saved) {
+      addTrail({
+        id: Number(trail.id),
+        name: trail.name,
+        location: trail.location,
+        dateVisited: new Date().toISOString(), // ou outro valor que você tiver
+      });
+      alert("Trilha salva com sucesso!");
+    } else {
+      alert("Erro ao salvar a trilha. Tente novamente.");
+    }
+  };
+  if (loading) {
+    return (
+      <SafeAreaView className="flex-1 bg-zinc-900 items-center justify-center">
+        <Text className="text-white">Carregando...</Text>
+      </SafeAreaView>
+    );
+  }
 
   return (
     <SafeAreaView className="flex-1 bg-zinc-900">

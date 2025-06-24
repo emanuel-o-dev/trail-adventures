@@ -2,7 +2,7 @@ import React, { useCallback, useRef, useMemo } from "react";
 import { View } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
 
-import { Link, useRouter } from "expo-router";
+import { Link } from "expo-router";
 import { ITrailShort } from "../interfaces/ITrailShort.interface";
 import TrailCardShort from "./TrailCardShort";
 import { useAsyncData } from "../hooks/useAsyncData";
@@ -10,12 +10,11 @@ import TrailRepository from "../src/database/TrailRepository";
 
 export default function TrailWrapper() {
   const sheetRef = useRef<BottomSheet>(null);
-  const router = useRouter();
 
   const { trails = [], loading } = useAsyncData<{ trails: ITrailShort[] }>(
     async () => {
       const repository = new TrailRepository();
-      const trails = repository.all(); // essa função é síncrona
+      const trails = repository.all();
       return { trails };
     },
   );
@@ -31,7 +30,6 @@ export default function TrailWrapper() {
 
   const handleClosePress = useCallback(() => {
     console.log("close press");
-    // você pode fechar o sheet manualmente com: sheetRef.current?.close();
   }, []);
 
   const renderItem = useCallback(
@@ -39,8 +37,8 @@ export default function TrailWrapper() {
       <View>
         <Link
           href={{
-            pathname: "/(auth)/(home)/details",
-            params: { id: item.id.toString() }, // garantindo string
+            pathname: "/(auth)/(home)/[id]",
+            params: { id: item.id.toString() },
           }}
           asChild
         >

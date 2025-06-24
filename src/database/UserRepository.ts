@@ -1,4 +1,5 @@
 import { IUser } from "../../interfaces/IUser.interface";
+import FavoriteRepository from "./FavoritesRepository";
 import db from "./SQLiteDatabase";
 
 export default class UserRepository {
@@ -90,5 +91,20 @@ export default class UserRepository {
   public all() {
     const result = db.getAllSync<IUser>("SELECT * FROM users;");
     return result;
+  }
+
+  public saveTrail(userId: number, trailId: number): boolean {
+    const favaoriteRepository = new FavoriteRepository();
+    try {
+      favaoriteRepository.create({
+        user_id: userId.toString(),
+        trail_id: trailId.toString(),
+        created_at: new Date().toISOString(),
+      });
+      return true;
+    } catch (error) {
+      console.error("Erro ao salvar a trilha:", error);
+      return false;
+    }
   }
 }

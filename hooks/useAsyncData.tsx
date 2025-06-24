@@ -85,7 +85,7 @@ const AsyncDataLoading = ({ hasError }: LoadingProps) => {
             title={"Retornar ao Início"}
             onPress={() => {
               // optionally clean user token here. this can avoid a redirect loop
-              router.replace("/");
+              router.replace("home");
             }}
           />
 
