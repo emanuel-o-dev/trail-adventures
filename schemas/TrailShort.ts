@@ -7,6 +7,7 @@ export const TrailShort = z.object({
   name: z.string(),
   difficulty: difficultyEnum,
   duration: z.string(),
+  difficultyLabel: z.string(),
   terrain: z.string(),
   distance: z.string(),
   image: z.string(),

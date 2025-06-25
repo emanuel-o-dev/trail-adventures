@@ -8,13 +8,14 @@ export const TrailFull = z.object({
     .refine((value) => ["easy", "medium", "hard"].includes(value), {
       message: "Invalid difficulty level",
     }),
+  difficultyLabel: z.string(),
   duration: z.string(),
   terrain: z.string(),
   distance: z.string(),
   coordinates: z
     .object({
-      latitude: z.number(),
-      longitude: z.number(),
+      latitude: z.number().default(0),
+      longitude: z.number().default(0),
     })
     .optional(),
   image: z.string(),

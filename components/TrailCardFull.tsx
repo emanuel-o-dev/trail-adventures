@@ -17,7 +17,7 @@ import useSavedTrails from "../states/useSavedTrails";
 import { TrailSaved } from "../schemas/TrailSaved";
 
 export default function TrailCardFull({ id }: { id: number }) {
-  const { trail, loading } = useAsyncData<{ trail: any }>(async () => {
+  const { trail, loading } = useAsyncData<{ trail: TrailFull }>(async () => {
     const repository = new TrailRepository();
     const trail = repository.findById(id);
     return { trail };

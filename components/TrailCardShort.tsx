@@ -39,7 +39,7 @@ const TrailCardShort = forwardRef<typeof Pressable, TrailCardShortProps>(
         <View>
           <Text style={styles.title}>{validTrail.name}</Text>
           <View style={styles.row}>
-            <Text style={styles.detailText}>{validTrail.difficulty}</Text>
+            <Text style={styles.detailText}>{validTrail.difficultyLabel}</Text>
             <Divider color="white" style={styles.divider} />
             <Text style={styles.subText}>{validTrail.distance}</Text>
           </View>
