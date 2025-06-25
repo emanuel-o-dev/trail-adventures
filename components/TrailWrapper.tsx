@@ -7,17 +7,16 @@ import { TrailShort } from "../schemas/TrailShort";
 import TrailCardShort from "./TrailCardShort";
 import { useAsyncData } from "../hooks/useAsyncData";
 import TrailRepository from "../src/database/TrailRepository";
+import useTrails from "../states/useTrails";
 
 export default function TrailWrapper() {
   const sheetRef = useRef<BottomSheet>(null);
 
-  const { trails = [], loading } = useAsyncData<{ trails: TrailShort[] }>(
-    async () => {
-      const repository = new TrailRepository();
-      const trails = repository.all();
-      return { trails };
-    },
-  );
+  const { trails, loadTrails } = useTrails();
+  const { loading } = useAsyncData<{ trails: TrailShort[] }>(async () => {
+    loadTrails();
+    return { trails };
+  });
 
   const snapPoints = useMemo(() => ["30%", "60%", "90%"], []);
 

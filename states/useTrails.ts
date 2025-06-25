@@ -7,7 +7,7 @@ import { TrailShort } from "../schemas/TrailShort";
 interface TrailsState {
   trails: TrailShort[];
   loadTrails: () => void;
-  addTrail: (trail: TrailFullSchema) => void;
+  addTrail: () => void;
 }
 
 const useTrails = create<TrailsState>((set) => ({
@@ -17,10 +17,10 @@ const useTrails = create<TrailsState>((set) => ({
     const trails = repository.all();
     set({ trails });
   },
-  addTrail: (trail) => {
-    set((state) => ({
-      trails: [...state.trails, trail as TrailShort],
-    }));
+  addTrail: () => {
+    const repository = new TrailRepository();
+    const trails = repository.all();
+    set({ trails });
   },
 }));
 

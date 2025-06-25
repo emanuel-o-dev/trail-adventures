@@ -16,8 +16,10 @@ import TrailRepository from "../../src/database/TrailRepository";
 import { TrailFullSchema } from "../../schemas/TrailFull";
 import { useState } from "react";
 import ImagePickerInput from "../../components/ImagePickerInput";
+import useTrails from "../../states/useTrails";
 
 export default function NewLocation() {
+  const { addTrail } = useTrails();
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [duration, setDuration] = useState("");
@@ -70,6 +72,7 @@ export default function NewLocation() {
 
       if (result) {
         alert("Trilha cadastrada com sucesso!");
+        addTrail();
         clean();
       } else {
         alert("Erro ao cadastrar trilha.");
