@@ -1,6 +1,6 @@
-import { TrailFull } from "../schemas/TrailFull";
+import { TrailFullSchema } from "../schemas/TrailFull";
 
-export const trailsMock: TrailFull[] = [
+export const trailsMock: TrailFullSchema[] = [
   {
     id: 1,
     name: "Trilha da Chapada Diamantina",
@@ -17,8 +17,8 @@ export const trailsMock: TrailFull[] = [
     description:
       "Trilha que leva a formações rochosas icônicas na Chapada Diamantina, ideal para caminhadas moderadas com vistas panorâmicas.",
     location: "Palmeiras - BA",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 2,
@@ -36,8 +36,8 @@ export const trailsMock: TrailFull[] = [
     description:
       "Trilha urbana no Rio de Janeiro que oferece uma vista incrível da Baía de Guanabara e do Pão de Açúcar.",
     location: "Rio de Janeiro - RJ",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 3,
@@ -54,8 +54,8 @@ export const trailsMock: TrailFull[] = [
     description:
       "Caminhada por trilhas naturais na floresta atlântica de Tapiraí, com rica biodiversidade e paisagens exuberantes.",
     location: "Tapiraí - SP",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 4,
@@ -73,8 +73,8 @@ export const trailsMock: TrailFull[] = [
     description:
       "Desafiadora trilha que leva ao ponto mais alto da Serra dos Pireneus, com vistas deslumbrantes do cerrado goiano.",
     location: "Pirenópolis - GO",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
   {
     id: 5,
@@ -91,7 +91,7 @@ export const trailsMock: TrailFull[] = [
     description:
       "Trilha que percorre a Serra do Mar, oferecendo contato direto com a Mata Atlântica e vistas para o litoral paulista.",
     location: "São Paulo - SP",
-    createdAt: new Date().toISOString(),
-    updatedAt: new Date().toISOString(),
+    createdAt: new Date(),
+    updatedAt: new Date(),
   },
 ];

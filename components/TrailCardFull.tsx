@@ -9,7 +9,7 @@ import {
 import React, { useEffect, useState } from "react";
 import { ButtonGroup, Image } from "@rneui/themed";
 import TrailRepository from "../src/database/TrailRepository";
-import { TrailFull } from "../schemas/TrailFull";
+import { TrailFullSchema } from "../schemas/TrailFull";
 import { useAsyncData } from "../hooks/useAsyncData";
 import UserRepository from "../src/database/UserRepository";
 import useUser from "../states/useUser";
@@ -17,11 +17,13 @@ import useSavedTrails from "../states/useSavedTrails";
 import { TrailSaved } from "../schemas/TrailSaved";
 
 export default function TrailCardFull({ id }: { id: number }) {
-  const { trail, loading } = useAsyncData<{ trail: TrailFull }>(async () => {
-    const repository = new TrailRepository();
-    const trail = repository.findById(id);
-    return { trail };
-  });
+  const { trail, loading } = useAsyncData<{ trail: TrailFullSchema }>(
+    async () => {
+      const repository = new TrailRepository();
+      const trail = repository.findById(id);
+      return { trail };
+    },
+  );
 
   const userId = Number(useUser().getUser()?.id);
   const { loadTrails, addTrail } = useSavedTrails();

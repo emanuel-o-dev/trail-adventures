@@ -2,7 +2,7 @@ import { z } from "zod";
 export const User = z.object({
   id: z.number(),
   name: z.string(),
-  email: z.string().email(),
+  email: z.string().email("Deve ser um endereço de email válido"),
   password: z.string().min(6),
   createdAt: z
     .date()

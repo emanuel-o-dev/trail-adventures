@@ -13,7 +13,7 @@ import InputForm from "../../components/InputForm";
 import { TrailDifficulty } from "../../schemas/TrailDifficulty";
 import { Button, Icon } from "@rneui/themed";
 import TrailRepository from "../../src/database/TrailRepository";
-import { TrailFull } from "../../schemas/TrailFull";
+import { TrailFullSchema } from "../../schemas/TrailFull";
 import { useState } from "react";
 import ImagePickerInput from "../../components/ImagePickerInput";
 
@@ -24,7 +24,7 @@ export default function NewLocation() {
   const [distance, setDistance] = useState("");
   const [description, setDescription] = useState("");
   const [terrain, setTerrainType] = useState("");
-  const [difficulty, setDifficulty] = useState<TrailDifficulty | null>(null);
+  const [difficulty, setDifficulty] = useState<TrailDifficulty>();
   const [imageUri, setImageUri] = useState<string>("");
 
   const clean = () => {
@@ -32,33 +32,41 @@ export default function NewLocation() {
     setLocation("");
     setDescription("");
     setTerrainType("");
-    setDifficulty(null);
+    setDifficulty(undefined);
     setDuration("");
     setDistance("");
     setImageUri("");
   };
-  const handleSubmit = () => {
-    if (!name || !location || !description || !terrain || !difficulty) {
-      alert("Por favor, preencha todos os campos.");
-      return;
-    }
 
-    const newTrail: TrailFull = {
-      id: 0, // Auto-incremented by the database
+  const handleSubmit = () => {
+    const data = {
+      id: 0,
       name,
       location,
       duration,
       distance,
       description,
       terrain,
-      difficulty: difficulty.difficulty,
+      difficulty: difficulty?.difficulty ?? "",
       image: imageUri,
-      createdAt: new Date().toISOString(),
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     };
+
+    const parsed = TrailFullSchema.safeParse(data);
+    if (!parsed.success) {
+      const message = parsed.error.errors.map((e) => e.message).join("\n");
+      alert("Erros de validação:\n" + message);
+      return;
+    }
 
     try {
       const repository = new TrailRepository();
-      const result = repository.create(newTrail);
+      const result = repository.create(parsed.data);
 
       if (result) {
         alert("Trilha cadastrada com sucesso!");

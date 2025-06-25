@@ -1,4 +1,4 @@
-import { IUser } from "../../schemas/User";
+import { User } from "../../schemas/User";
 import FavoriteRepository from "./FavoritesRepository";
 import db from "./SQLiteDatabase";
 
@@ -33,7 +33,7 @@ export default class UserRepository {
     db.runSync("DROP TABLE users;");
   }
 
-  public create(user: IUser) {
+  public create(user: User) {
     const { name, email, password } = user;
     const createdAt = new Date().toISOString();
     const updatedAt = new Date().toISOString();
@@ -42,7 +42,7 @@ export default class UserRepository {
       [name, email, password, createdAt, updatedAt],
     );
   }
-  public update(user: IUser) {
+  public update(user: User) {
     const { id, name, email, password } = user;
     const createdAt = new Date().toISOString();
     const updatedAt = new Date().toISOString();
@@ -53,14 +53,13 @@ export default class UserRepository {
   }
 
   public findById(id: string) {
-    const result = db.getFirstSync<IUser>(
-      "SELECT * FROM trails WHERE id = ?;",
-      [id],
-    );
+    const result = db.getFirstSync<User>("SELECT * FROM trails WHERE id = ?;", [
+      id,
+    ]);
     return result;
   }
   public findByEmail(email: string) {
-    const result = db.getFirstSync<IUser>(
+    const result = db.getFirstSync<User>(
       "SELECT * FROM users WHERE email = ?;",
       [email],
     );
@@ -68,14 +67,14 @@ export default class UserRepository {
   }
 
   public login(email: string, password: string) {
-    const result = db.getFirstSync<IUser>(
+    const result = db.getFirstSync<User>(
       "SELECT * FROM users WHERE email = ? AND password = ?;",
       [email, password],
     );
     return result;
   }
   populate() {
-    const users: IUser[] = [
+    const users: User[] = [
       {
         id: 1,
         name: "Lucas",
@@ -89,7 +88,7 @@ export default class UserRepository {
   }
 
   public all() {
-    const result = db.getAllSync<IUser>("SELECT * FROM users;");
+    const result = db.getAllSync<User>("SELECT * FROM users;");
     return result;
   }
 
@@ -97,8 +96,8 @@ export default class UserRepository {
     const favaoriteRepository = new FavoriteRepository();
     try {
       favaoriteRepository.create({
-        user_id: userId.toString(),
-        trail_id: trailId.toString(),
+        user_id: userId,
+        trail_id: trailId,
         created_at: new Date().toISOString(),
       });
       return true;

@@ -21,6 +21,7 @@ export default function TrailCardSaved({ trail }: { trail: TrailSaved }) {
     const result = repository.deleteById({
       trail_id: trail.id,
       user_id: userId,
+      created_at: trail.dateVisited,
     });
     if (result) {
       alert("Trilha removida com sucesso!");
