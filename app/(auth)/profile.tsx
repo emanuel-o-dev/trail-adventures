@@ -18,7 +18,7 @@ export default function _screen() {
 
   const handleLogout = () => {
     reset();
-    router.push("/");
+    router.push("");
   };
   const user = getUser();
   if (!user) {

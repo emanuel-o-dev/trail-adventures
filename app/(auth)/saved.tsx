@@ -12,7 +12,7 @@ export default function SavedScreen() {
 
   useEffect(() => {
     if (userId) {
-      loadTrails(userId); // carregar trilhas salvas no início
+      loadTrails(userId);
     }
   }, [userId]);
 
@@ -28,9 +28,7 @@ export default function SavedScreen() {
     <View className="flex-1 p-4 bg-white">
       <FlatList
         data={trails}
-        keyExtractor={(item) =>
-          item.dateVisited?.toString() || item.id.toString()
-        }
+        keyExtractor={(item) => item.dateVisited}
         renderItem={({ item }) => <TrailCardSaved trail={item} />}
       />
     </View>

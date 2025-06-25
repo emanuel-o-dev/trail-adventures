@@ -10,21 +10,23 @@ import {
 import { SafeAreaView } from "react-native-safe-area-context";
 import ListItemAcordion from "../../components/ListItemAccordion";
 import InputForm from "../../components/InputForm";
-import { ITrailDifficulty } from "../../interfaces/ITrailDifficulty";
+import { TrailDifficulty } from "../../schemas/TrailDifficulty";
 import { Button, Icon } from "@rneui/themed";
 import TrailRepository from "../../src/database/TrailRepository";
-import { ITrailFull } from "../../interfaces/ITrailFull.interface";
+import { TrailFullSchema } from "../../schemas/TrailFull";
 import { useState } from "react";
 import ImagePickerInput from "../../components/ImagePickerInput";
+import useTrails from "../../states/useTrails";
 
 export default function NewLocation() {
+  const { addTrail } = useTrails();
   const [name, setName] = useState("");
   const [location, setLocation] = useState("");
   const [duration, setDuration] = useState("");
   const [distance, setDistance] = useState("");
   const [description, setDescription] = useState("");
   const [terrain, setTerrainType] = useState("");
-  const [difficulty, setDifficulty] = useState<ITrailDifficulty | null>(null);
+  const [difficulty, setDifficulty] = useState<TrailDifficulty>();
   const [imageUri, setImageUri] = useState<string>("");
 
   const clean = () => {
@@ -32,34 +34,45 @@ export default function NewLocation() {
     setLocation("");
     setDescription("");
     setTerrainType("");
-    setDifficulty(null);
+    setDifficulty(undefined);
     setDuration("");
     setDistance("");
     setImageUri("");
   };
-  const handleSubmit = () => {
-    if (!name || !location || !description || !terrain || !difficulty) {
-      alert("Por favor, preencha todos os campos.");
-      return;
-    }
 
-    const newTrail: ITrailFull = {
+  const handleSubmit = () => {
+    const data = {
+      id: 0,
       name,
       location,
       duration,
       distance,
       description,
       terrain,
-      difficulty: difficulty.difficulty, // ou difficulty.seq, depende de como vai salvar
+      difficulty: difficulty?.difficulty ?? "",
       image: imageUri,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+      coordinates: {
+        latitude: 0,
+        longitude: 0,
+      },
     };
+
+    const parsed = TrailFullSchema.safeParse(data);
+    if (!parsed.success) {
+      const message = parsed.error.errors.map((e) => e.message).join("\n");
+      alert("Erros de validação:\n" + message);
+      return;
+    }
 
     try {
       const repository = new TrailRepository();
-      const result = repository.create(newTrail);
+      const result = repository.create(parsed.data);
 
       if (result) {
         alert("Trilha cadastrada com sucesso!");
+        addTrail();
         clean();
       } else {
         alert("Erro ao cadastrar trilha.");

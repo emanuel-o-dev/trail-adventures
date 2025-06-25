@@ -1,8 +1,8 @@
-import { ITrailFull } from "../../interfaces/ITrailFull.interface";
-import { ITrailShort } from "../../interfaces/ITrailShort.interface";
+import { TrailFullSchema } from "../../schemas/TrailFull";
 import db from "./SQLiteDatabase";
 import { trailsMock } from "../../mocks/trailFull";
-import { ITrailDifficulty } from "../../interfaces/ITrailDifficulty";
+import { TrailDifficulty } from "../../schemas/TrailDifficulty";
+import { TrailShort } from "../../schemas/TrailShort";
 
 export default class TrailRepository {
   constructor() {
@@ -59,59 +59,80 @@ export default class TrailRepository {
     db.runSync("DROP TABLE IF EXISTS trailsDifficulty;");
   }
 
-  public create(trail: ITrailFull): boolean {
-    const result = db.getFirstSync("SELECT MAX(id) as maxId FROM trails;") as {
+  public create(trail: any): boolean {
+    const result = TrailFullSchema.safeParse(trail);
+    if (!result.success) {
+      console.warn("Tentativa de salvar trilha inválida:", result.error);
+      return false;
+    }
+
+    const validTrail = result.data;
+    const resultId = db.getFirstSync(
+      "SELECT MAX(id) as maxId FROM trails;",
+    ) as {
       maxId: number | null;
     };
 
-    const {
-      id: id = (result.maxId ?? 0) + 1,
-      name,
-      description,
-      location,
-      difficulty,
-      terrain,
-      distance,
-      duration,
-      image,
-    } = trail;
+    const id = (resultId.maxId ?? 0) + 1;
     const runResult = db.runSync(
-      "INSERT INTO trails (id,name, description, location, difficulty, terrain, distance, duration, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      "INSERT INTO trails (id, name, description, location, difficulty, terrain, distance, duration, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
       [
         id,
-        name,
-        description,
-        location,
-        difficulty,
-        terrain,
-        distance,
-        duration,
-        image,
+        validTrail.name,
+        validTrail.description,
+        validTrail.location,
+        validTrail.difficulty,
+        validTrail.terrain,
+        validTrail.distance,
+        validTrail.duration,
+        validTrail.image,
       ],
     );
+
     return runResult.changes > 0;
   }
 
-  public all(): ITrailShort[] {
-    return db.getAllSync<ITrailShort>(`
-      SELECT id, name, difficulty, duration, terrain, distance, image, location
-      FROM trails
-      ORDER BY created_at DESC;
-    `);
+  public all(): TrailShort[] {
+    return db.getAllSync<TrailShort>(`
+    SELECT 
+      t.id, 
+      t.name, 
+      t.difficulty, 
+      d.label as difficultyLabel,
+      t.duration, 
+      t.terrain, 
+      t.distance, 
+      t.image, 
+      t.location
+    FROM trails t
+    JOIN trailsDifficulty d ON t.difficulty = d.difficulty
+    ORDER BY t.created_at DESC;
+  `);
   }
 
-  public findById(id: number): ITrailFull {
-    const trail = db.getFirstSync<ITrailFull>(
-      "SELECT * FROM trails WHERE id = ?;",
+  public findById(id: number): TrailFullSchema {
+    const trail = db.getFirstSync<
+      TrailFullSchema & { difficultyLabel: string }
+    >(
+      `
+    SELECT 
+      t.*, 
+      d.label as difficultyLabel
+    FROM trails t
+    JOIN trailsDifficulty d ON t.difficulty = d.difficulty
+    WHERE t.id = ?;
+    `,
       [id],
     );
+
     if (!trail) {
       throw new Error(`Trail with id ${id} not found`);
     }
+
     return trail;
   }
 
-  public populate(trails: ITrailFull[]) {
+  public populate(trails: TrailFullSchema[]) {
     trails.forEach((trail) => {
       this.create(trail);
     });
@@ -119,7 +140,7 @@ export default class TrailRepository {
   }
 
   public getDifficulties() {
-    return db.getAllSync<ITrailDifficulty>(`
+    return db.getAllSync<TrailDifficulty>(`
       SELECT difficulty, label, seq
       FROM trailsDifficulty
       ORDER BY seq;

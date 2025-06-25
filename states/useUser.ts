@@ -1,23 +1,23 @@
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
-import { IUser } from "../interfaces/IUser.interface";
+import { User } from "../schemas/User";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 type State = {
-  user: IUser | null;
+  user: User | null;
 };
 
 type Actions = {
   reset: () => void;
-  setUser: (user: IUser) => void;
-  getUser: () => IUser | null;
+  setUser: (user: User) => void;
+  getUser: () => User | null;
 };
 
 const useUser = create<State & Actions>()(
   persist(
     (set, get) => ({
       user: null,
-      setUser: (user: IUser) => {
+      setUser: (user: User) => {
         set(() => ({
           user: user,
         }));

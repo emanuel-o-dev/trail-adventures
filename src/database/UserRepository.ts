@@ -1,4 +1,4 @@
-import { IUser } from "../../interfaces/IUser.interface";
+import { User, UserCreate } from "../../schemas/User";
 import FavoriteRepository from "./FavoritesRepository";
 import db from "./SQLiteDatabase";
 
@@ -33,16 +33,25 @@ export default class UserRepository {
     db.runSync("DROP TABLE users;");
   }
 
-  public create(user: IUser) {
+  public create(user: UserCreate) {
     const { name, email, password } = user;
-    const createdAt = new Date().toISOString();
-    const updatedAt = new Date().toISOString();
-    db.runSync(
+    const result = db.runSync(
       "INSERT INTO users (name, email, password, created_at, updated_at) VALUES (?, ?, ?, ?, ?);",
-      [name, email, password, createdAt, updatedAt],
+      [
+        name,
+        email,
+        password,
+        new Date().toISOString(),
+        new Date().toISOString(),
+      ],
     );
+    if (result.changes > 0) {
+      return db.getFirstSync<User>(
+        "SELECT * FROM users WHERE id = last_insert_rowid();",
+      );
+    }
   }
-  public update(user: IUser) {
+  public update(user: User) {
     const { id, name, email, password } = user;
     const createdAt = new Date().toISOString();
     const updatedAt = new Date().toISOString();
@@ -53,14 +62,13 @@ export default class UserRepository {
   }
 
   public findById(id: string) {
-    const result = db.getFirstSync<IUser>(
-      "SELECT * FROM trails WHERE id = ?;",
-      [id],
-    );
+    const result = db.getFirstSync<User>("SELECT * FROM trails WHERE id = ?;", [
+      id,
+    ]);
     return result;
   }
   public findByEmail(email: string) {
-    const result = db.getFirstSync<IUser>(
+    const result = db.getFirstSync<User>(
       "SELECT * FROM users WHERE email = ?;",
       [email],
     );
@@ -68,28 +76,28 @@ export default class UserRepository {
   }
 
   public login(email: string, password: string) {
-    const result = db.getFirstSync<IUser>(
+    const result = db.getFirstSync<User>(
       "SELECT * FROM users WHERE email = ? AND password = ?;",
       [email, password],
     );
     return result;
   }
   populate() {
-    const users: IUser[] = [
+    const users: User[] = [
       {
         id: 1,
         name: "Lucas",
         email: "test@test.com",
         password: "123456",
-        createdAt: new Date().toISOString(),
-        updatedAt: new Date().toISOString(),
+        createdAt: new Date(),
+        updatedAt: new Date(),
       },
     ];
     this.create(users[0]);
   }
 
   public all() {
-    const result = db.getAllSync<IUser>("SELECT * FROM users;");
+    const result = db.getAllSync<User>("SELECT * FROM users;");
     return result;
   }
 
@@ -97,8 +105,8 @@ export default class UserRepository {
     const favaoriteRepository = new FavoriteRepository();
     try {
       favaoriteRepository.create({
-        user_id: userId.toString(),
-        trail_id: trailId.toString(),
+        user_id: userId,
+        trail_id: trailId,
         created_at: new Date().toISOString(),
       });
       return true;

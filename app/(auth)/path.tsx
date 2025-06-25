@@ -4,17 +4,18 @@ import UserRepository from "../../src/database/UserRepository";
 import { Button } from "@rneui/base";
 import FavoriteRepository from "../../src/database/FavoritesRepository";
 import useUserStore from "../../states/useUser";
+import TrailRepository from "../../src/database/TrailRepository";
 
 export default function path() {
   const fecthData = async () => {
     console.log("test");
-    const repository = new UserRepository();
+    const repository = new TrailRepository();
     const trails = repository.all();
     console.log(trails);
   };
   const deleteData = async () => {
     console.log("delete");
-    const repository = new UserRepository();
+    const repository = new TrailRepository();
     const trails = repository.down();
     console.log(trails);
   };
