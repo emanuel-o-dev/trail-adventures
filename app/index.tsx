@@ -5,6 +5,7 @@ import useNavigationExitOnBack from "../hooks/useNavigationExitOnBack";
 import { useState } from "react";
 import UserRepository from "../src/database/UserRepository";
 import useUserStore from "../states/useUser";
+import { User, UserLogin } from "../schemas/User";
 
 export default function _screen() {
   const [email, setEmail] = useState("test@test.com");
@@ -15,15 +16,22 @@ export default function _screen() {
   useNavigationExitOnBack();
 
   const handleLogin = () => {
-    const user = userRepository.login(email, password);
-    console.log(user);
-    if (!user) {
-      alert("Invalid email or password");
+    const parsed = UserLogin.safeParse({ email, password });
+
+    if (!parsed.success) {
+      const message = parsed.error.errors.map((e) => e.message).join("\n");
+      alert("Erros de validação:\n" + message);
       return;
-    } else {
-      setUser(user);
-      router.push("(auth)/(home)/home");
     }
+
+    const user = userRepository.login(email, password);
+    if (!user) {
+      alert("Email ou senha inválidos.");
+      return;
+    }
+
+    setUser(user);
+    router.push("(auth)/(home)/home");
   };
 
   return (
