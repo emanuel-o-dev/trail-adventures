@@ -1,4 +1,4 @@
-import { TrailFullSchema } from "../../schemas/TrailFull";
+import { MarkersSchema, TrailFullSchema } from "../../schemas/TrailFull";
 import db from "./SQLiteDatabase";
 import { trailsMock } from "../../mocks/trailFull";
 import { TrailDifficulty } from "../../schemas/TrailDifficulty";
@@ -38,6 +38,8 @@ export default class TrailRepository {
           distance TEXT,
           duration TEXT,
           image TEXT,
+          latitude REAL, -- NOVO
+          longitude REAL, -- NOVO
           created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           updated_at DATETIME DEFAULT CURRENT_TIMESTAMP,
           FOREIGN KEY (difficulty) REFERENCES trailsDifficulty(difficulty)
@@ -75,7 +77,9 @@ export default class TrailRepository {
 
     const id = (resultId.maxId ?? 0) + 1;
     const runResult = db.runSync(
-      "INSERT INTO trails (id, name, description, location, difficulty, terrain, distance, duration, image) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?);",
+      `INSERT INTO trails 
+  (id, name, description, location, difficulty, terrain, distance, duration, image, latitude, longitude) 
+  VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);`,
       [
         id,
         validTrail.name,
@@ -86,6 +90,8 @@ export default class TrailRepository {
         validTrail.distance,
         validTrail.duration,
         validTrail.image,
+        validTrail.coordinates?.latitude ?? null,
+        validTrail.coordinates?.longitude ?? null,
       ],
     );
 
@@ -108,6 +114,26 @@ export default class TrailRepository {
     JOIN trailsDifficulty d ON t.difficulty = d.difficulty
     ORDER BY t.created_at DESC;
   `);
+  }
+  public allMarkers(): MarkersSchema[] {
+    const rows = db.getAllSync<any>(`
+    SELECT
+      id,
+      name,
+      latitude,
+      longitude
+    FROM trails
+    WHERE latitude IS NOT NULL AND longitude IS NOT NULL;
+  `);
+
+    return rows.map((row) => ({
+      id: row.id,
+      name: row.name,
+      coordinates: {
+        latitude: row.latitude,
+        longitude: row.longitude,
+      },
+    }));
   }
 
   public findById(id: number): TrailFullSchema {

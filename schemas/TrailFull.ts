@@ -24,5 +24,14 @@ export const TrailFullSchema = z.object({
   createdAt: z.date().default(() => new Date()),
   updatedAt: z.date().optional(),
 });
-
 export type TrailFullSchema = z.infer<typeof TrailFullSchema>;
+export const MarkersSchema = z.object({
+  id: z.number(),
+  name: z.string().min(2, "Nome do marcador deve ter pelo menos 2 caracteres"),
+  coordinates: z.object({
+    latitude: z.number().default(0),
+    longitude: z.number().default(0),
+  }),
+});
+
+export type MarkersSchema = z.infer<typeof MarkersSchema>;
