@@ -43,7 +43,7 @@ export default function _screen() {
 
       <Input
         label="Email"
-        placeholder="test@test.com"
+        placeholder="Digite seu email"
         value={email}
         onChangeText={setEmail}
         autoCapitalize="none"

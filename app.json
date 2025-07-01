@@ -18,7 +18,10 @@
     "android": {
       "versionCode": 1,
       "package": "com.emanuel.trailadventures",
-      "permissions": ["android.permission.RECORD_AUDIO"]
+      "permissions": [
+        "android.permission.RECORD_AUDIO",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "favicon": "./assets/map.png",
@@ -43,6 +46,12 @@
       "eas": {
         "projectId": "7f7b7bfd-842d-473f-bc86-a376b57bf81a"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/7f7b7bfd-842d-473f-bc86-a376b57bf81a"
     }
   }
 }
