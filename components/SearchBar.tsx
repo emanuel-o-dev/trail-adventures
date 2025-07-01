@@ -1,15 +1,20 @@
-import React, { useState } from "react";
+// components/SearchBar.tsx
+import React from "react";
 import { Input } from "@rneui/themed";
 import { View } from "react-native";
 
-export default function SearchBar() {
-  const [search, setSearch] = useState("");
+type SearchBarProps = {
+  search: string;
+  setSearch: (val: string) => void;
+};
+
+export default function SearchBar({ search, setSearch }: SearchBarProps) {
   return (
-    <View className="m-4 flex-row rounded-xl bg-zinc-800 color-white">
+    <View className="m-2 flex-row rounded-xl bg-zinc-800">
       <Input
         placeholder="Explore trilhas"
         errorStyle={{ display: "none" }}
-        onChangeText={(val) => setSearch(val)}
+        onChangeText={setSearch}
         value={search}
         leftIcon={{
           type: "font-awesome",
@@ -22,15 +27,9 @@ export default function SearchBar() {
           fontSize: 18,
           paddingLeft: 10,
         }}
-        importantForAccessibility="yes"
-        accessibilityLabel="Search bar"
-        accessibilityHint="Type the name of the trail you want to search for"
-        accessibilityRole="search"
-        accessibilityState={{ checked: false }}
-        accessibilityActions={[
-          { name: "search", label: "Search" },
-          { name: "clear", label: "Clear" },
-        ]}
+        inputContainerStyle={{
+          borderBottomWidth: 0,
+        }}
       />
     </View>
   );

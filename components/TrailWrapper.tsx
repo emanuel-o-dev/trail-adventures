@@ -1,34 +1,27 @@
-import React, { useCallback, useRef, useMemo } from "react";
+import React, { useCallback, useRef, useMemo, useState } from "react";
 import { View } from "react-native";
 import BottomSheet, { BottomSheetFlatList } from "@gorhom/bottom-sheet";
-
 import { Link } from "expo-router";
 import { TrailShort } from "../schemas/TrailShort";
 import TrailCardShort from "./TrailCardShort";
-import { useAsyncData } from "../hooks/useAsyncData";
-import TrailRepository from "../src/database/TrailRepository";
-import useTrails from "../states/useTrails";
+import SearchBar from "./SearchBar";
 
-export default function TrailWrapper() {
+type TrailWrapperProps = {
+  trails: Array<TrailShort>;
+};
+
+export default function TrailWrapper({ trails }: TrailWrapperProps) {
   const sheetRef = useRef<BottomSheet>(null);
+  const [search, setSearch] = useState("");
 
-  const { trails, loadTrails } = useTrails();
-  const { loading } = useAsyncData<{ trails: TrailShort[] }>(async () => {
-    loadTrails();
-    return { trails };
-  });
-
-  const snapPoints = useMemo(() => ["30%", "60%", "90%"], []);
+  const snapPoints = useMemo(() => ["60%", "90%"], []);
 
   const handleSheetChange = useCallback((index: number) => {
-    if (index === 0) {
-      handleClosePress();
+    if (index === -1) {
+      sheetRef.current?.close();
+      console.log("Bottom sheet closed");
     }
     console.log("handleSheetChange", index);
-  }, []);
-
-  const handleClosePress = useCallback(() => {
-    console.log("close press");
   }, []);
 
   const renderItem = useCallback(
@@ -48,17 +41,22 @@ export default function TrailWrapper() {
     [],
   );
 
-  if (loading) return loading;
+  // Filtra as trilhas com base no texto digitado
+  const filteredTrails = useMemo(
+    () =>
+      trails.filter((trail) =>
+        trail.name.toLowerCase().includes(search.toLowerCase()),
+      ),
+    [search, trails],
+  );
 
   return (
     <BottomSheet
       ref={sheetRef}
-      index={1}
+      index={0}
       snapPoints={snapPoints}
       enableDynamicSizing={false}
       onChange={handleSheetChange}
-      detached={false}
-      onClose={handleClosePress}
       handleIndicatorStyle={{
         backgroundColor: "#fff",
         width: 50,
@@ -76,8 +74,9 @@ export default function TrailWrapper() {
         borderTopRightRadius: 10,
       }}
     >
+      <SearchBar search={search} setSearch={setSearch} />
       <BottomSheetFlatList
-        data={trails}
+        data={filteredTrails}
         keyExtractor={(item) => item.id.toString()}
         renderItem={renderItem}
         showsVerticalScrollIndicator={false}

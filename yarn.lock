@@ -780,6 +780,11 @@
   dependencies:
     regenerator-runtime "^0.14.0"
 
+"@babel/runtime@^7.2.0":
+  version "7.27.6"
+  resolved "https://registry.yarnpkg.com/@babel/runtime/-/runtime-7.27.6.tgz#ec4070a04d76bae8ddbb10770ba55714a417b7c6"
+  integrity sha512-vbavdySgbTTrmFE+EsiqUTzlOr5bzlnJtUv9PynGCAKvfQqjIXbvFdumPM/GxMDfyuGMJaJAU6TO4zc1Jf1i8Q==
+
 "@babel/template@^7.25.0", "@babel/template@^7.25.9", "@babel/template@^7.26.9", "@babel/template@^7.27.0", "@babel/template@^7.3.3":
   version "7.27.0"
   resolved "https://registry.yarnpkg.com/@babel/template/-/template-7.27.0.tgz#b253e5406cc1df1c57dcd18f11760c2dbf40c0b4"
@@ -1373,6 +1378,11 @@
   dependencies:
     "@babel/runtime" "^7.13.10"
     "@radix-ui/react-compose-refs" "1.0.0"
+
+"@react-leaflet/core@^1.1.1":
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/@react-leaflet/core/-/core-1.1.1.tgz#827fd05bb542cf874116176d8ef48d5b12163f81"
+  integrity sha512-7PGLWa9MZ5x/cWy8EH2VzI4T8q5WpuHbixzCDXqixP/WyqwIrg5NDUPgYuFnB4IEIZF+6nA265mYzswFo/h1Pw==
 
 "@react-native-async-storage/async-storage@1.23.1":
   version "1.23.1"
@@ -2960,6 +2970,15 @@ expo-keep-awake@~14.0.3:
   resolved "https://registry.yarnpkg.com/expo-keep-awake/-/expo-keep-awake-14.0.3.tgz#74c91b68effdb6969bc1e8371621aad90386cfbf"
   integrity sha512-6Jh94G6NvTZfuLnm2vwIpKe3GdOiVBuISl7FI8GqN0/9UOg9E0WXXp5cDcfAG8bn80RfgLJS8P7EPUGTZyOvhg==
 
+expo-leaflet@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/expo-leaflet/-/expo-leaflet-1.0.3.tgz#180a521b04c8664df6dbd85bad5313b659b337ef"
+  integrity sha512-QmaemVcBKKEy4CrUAG1axH5vJlIMcUGDhmzzfOJg+N+LnGtpjiBkNFpZWiR2XDH9bQjLB8TFl6gZYmyt6OxP5w==
+  dependencies:
+    leaflet "^1.7.1"
+    lodash.isequal "^4.5.0"
+    react-leaflet "^3.2.0"
+
 expo-linking@~7.0.5:
   version "7.0.5"
   resolved "https://registry.yarnpkg.com/expo-linking/-/expo-linking-7.0.5.tgz#6f583c636a3cc29f02d67a1550b21f8e636fe2af"
@@ -3301,6 +3320,11 @@ get-intrinsic@^1.2.6:
     hasown "^2.0.2"
     math-intrinsics "^1.1.0"
 
+get-node-dimensions@^1.2.1:
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/get-node-dimensions/-/get-node-dimensions-1.2.1.tgz#fb7b4bb57060fb4247dd51c9d690dfbec56b0823"
+  integrity sha512-2MSPMu7S1iOTL+BOa6K1S62hB2zUAYNF/lV0gSVlOaacd087lc6nR1H1r0e3B1CerTo+RceOmi1iJW+vp21xcQ==
+
 get-package-type@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/get-package-type/-/get-package-type-0.1.0.tgz#8de2d803cff44df3bc6c456e6668b36c3926e11a"
@@ -3545,7 +3569,7 @@ internal-ip@^4.3.0:
     default-gateway "^4.2.0"
     ipaddr.js "^1.9.0"
 
-invariant@^2.2.4:
+invariant@2.2.4, invariant@^2.2.4:
   version "2.2.4"
   resolved "https://registry.yarnpkg.com/invariant/-/invariant-2.2.4.tgz#610f3c92c9359ce1db616e538008d23ff35158e6"
   integrity sha512-phJfQVBuaJM5raOpJjSfkiD6BpbCE4Ns//LaXl6wGYtUBY83nWS6Rf9tXm2e8VaK60JEjYldbPif/A2B1C2gNA==
@@ -3917,6 +3941,11 @@ kleur@^3.0.3:
   resolved "https://registry.yarnpkg.com/kleur/-/kleur-3.0.3.tgz#a79c9ecc86ee1ce3fa6206d1216c501f147fc07e"
   integrity sha512-eTIzlVOSUR+JxdDFepEYcBMtZ9Qqdef+rnzWdRZuMbOywu5tO2w2N7rqjoANZ5k9vywhL6Br1VRjUIgTQx4E8w==
 
+leaflet@^1.7.1:
+  version "1.9.4"
+  resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.9.4.tgz#23fae724e282fa25745aff82ca4d394748db7d8d"
+  integrity sha512-nxS1ynzJOmOlHp+iL3FyWqK89GtNL8U8rvlMOsQdTTssxZwCXh8N2NB3GDQOL+YR3XnWyZAxwQixURb+FA74PA==
+
 leven@^3.1.0:
   version "3.1.0"
   resolved "https://registry.yarnpkg.com/leven/-/leven-3.1.0.tgz#77891de834064cccba82ae7842bb6b14a13ed7f2"
@@ -4102,6 +4131,11 @@ lodash.debounce@^4.0.8:
   version "4.0.8"
   resolved "https://registry.yarnpkg.com/lodash.debounce/-/lodash.debounce-4.0.8.tgz#82d79bff30a67c4005ffd5e2515300ad9ca4d7af"
   integrity sha512-FT1yDzDYEoYWhnSGnpE/4Kj1fLZkDFyqRb7fNt6FdYOSxlUWAtp42Eh6Wb0rGIv/m9Bgo7x4GhQbm5Ys4SG5ow==
+
+lodash.isequal@^4.5.0:
+  version "4.5.0"
+  resolved "https://registry.yarnpkg.com/lodash.isequal/-/lodash.isequal-4.5.0.tgz#415c4478f2bcc30120c22ce10ed3226f7d3e18e0"
+  integrity sha512-pDo3lu8Jhfjqls6GkMgpahsF9kCyayhgykjyLMNFTKWrpVdAQtYyB4muAMWozBB4ig/dtWAmsMxLEI8wuz+DYQ==
 
 lodash.throttle@^4.1.1:
   version "4.1.1"
@@ -5014,7 +5048,7 @@ prompts@^2.3.2:
     kleur "^3.0.3"
     sisteransi "^1.0.5"
 
-prop-types@^15.7.2:
+prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -5117,6 +5151,23 @@ react-is@^18.0.0, react-is@^18.2.0:
   resolved "https://registry.yarnpkg.com/react-is/-/react-is-18.3.1.tgz#e83557dc12eae63a99e003a46388b1dcbb44db7e"
   integrity sha512-/LLMVyas0ljjAtoYiPqYiL8VWXzUUdThrmU5+n20DZv+a+ClRoevUzw5JxU+Ieh5/c87ytoTBV9G1FiKfNJdmg==
 
+react-leaflet@^3.2.0:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/react-leaflet/-/react-leaflet-3.2.5.tgz#bec0bfab9dd8c2b030ea630f7a0687a60322ca7d"
+  integrity sha512-Z3KZ+4SijsRbbrt2I1a3ZDY6+V6Pm91eYTdxTN18G6IOkFRsJo1BuSPLFnyFrlF3WDjQFPEcTPkEgD1VEeAoBg==
+  dependencies:
+    "@react-leaflet/core" "^1.1.1"
+
+react-measure@^2.5.2:
+  version "2.5.2"
+  resolved "https://registry.yarnpkg.com/react-measure/-/react-measure-2.5.2.tgz#4ffc410e8b9cb836d9455a9ff18fc1f0fca67f89"
+  integrity sha512-M+rpbTLWJ3FD6FXvYV6YEGvQ5tMayQ3fGrZhRPHrE9bVlBYfDCLuDcgNttYfk8IqfOI03jz6cbpqMRTUclQnaA==
+  dependencies:
+    "@babel/runtime" "^7.2.0"
+    get-node-dimensions "^1.2.1"
+    prop-types "^15.6.2"
+    resize-observer-polyfill "^1.5.0"
+
 react-native-css-interop@0.1.22:
   version "0.1.22"
   resolved "https://registry.yarnpkg.com/react-native-css-interop/-/react-native-css-interop-0.1.22.tgz#70cc6ca7a8f14126e123e44a19ceed74dd2a167a"
@@ -5194,6 +5245,14 @@ react-native-size-matters@^0.4.0:
   version "0.4.2"
   resolved "https://registry.yarnpkg.com/react-native-size-matters/-/react-native-size-matters-0.4.2.tgz#4348bdd6fc47383f60326d58ad69870c998a5f9a"
   integrity sha512-DKE3f/sdcozd24oASgkP1iGg+YU3HoajRa5k3a4wkRzpiqREq8SGX12Y5zBgAt/8IivLQoTMYkyQu1/Giuy+zQ==
+
+react-native-webview@13.12.5:
+  version "13.12.5"
+  resolved "https://registry.yarnpkg.com/react-native-webview/-/react-native-webview-13.12.5.tgz#ed9eec1eda234d7cf18d329859b9bdebf7e258b6"
+  integrity sha512-INOKPom4dFyzkbxbkuQNfeRG9/iYnyRDzrDkJeyvSWgJAW2IDdJkWFJBS2v0RxIL4gqLgHkiIZDOfiLaNnw83Q==
+  dependencies:
+    escape-string-regexp "^4.0.0"
+    invariant "2.2.4"
 
 react-native@0.76.9:
   version "0.76.9"
@@ -5361,6 +5420,11 @@ requireg@^0.2.2:
     nested-error-stacks "~2.0.1"
     rc "~1.2.7"
     resolve "~1.7.1"
+
+resize-observer-polyfill@^1.5.0:
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/resize-observer-polyfill/-/resize-observer-polyfill-1.5.1.tgz#0e9020dd3d21024458d4ebd27e23e40269810464"
+  integrity sha512-LwZrotdHOo12nQuZlHEmtuXdqGoOD0OhaxopaNFxWzInpEgaLWoVuAMbTzixuosCx2nEG58ngzW3vxdWoxIgdg==
 
 resolve-from@^3.0.0:
   version "3.0.0"
