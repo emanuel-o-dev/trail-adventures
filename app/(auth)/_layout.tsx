@@ -21,6 +21,20 @@ export default function _layout() {
           }}
         />
         <Tabs.Screen
+          name="path"
+          options={{
+            headerShown: false,
+            tabBarIcon: () => (
+              <Icon
+                type="material-community"
+                name="map-minus"
+                color={theme.colors.primary}
+              />
+            ),
+            title: "Map",
+          }}
+        />
+        <Tabs.Screen
           name="saved"
           options={{
             headerShown: true,
@@ -45,7 +59,7 @@ export default function _layout() {
                 color={theme.colors.primary}
               />
             ),
-            title: "Nova Trilha",
+            title: "Add new",
           }}
         />
         <Tabs.Screen

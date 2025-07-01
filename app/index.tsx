@@ -1,16 +1,15 @@
 import { Button, Input, Text } from "@rneui/base";
-import { Link, useRouter } from "expo-router";
+import { Link, router, useRouter } from "expo-router";
 import { StyleSheet, View } from "react-native";
 import useNavigationExitOnBack from "../hooks/useNavigationExitOnBack";
 import { useState } from "react";
 import UserRepository from "../src/database/UserRepository";
 import useUserStore from "../states/useUser";
-import { UserLogin } from "../schemas/User";
+import { User, UserLogin } from "../schemas/User";
 
 export default function _screen() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const router = useRouter();
+  const [email, setEmail] = useState("test@test.com");
+  const [password, setPassword] = useState("123456");
   const { setUser } = useUserStore();
 
   const userRepository = new UserRepository();
@@ -32,48 +31,34 @@ export default function _screen() {
     }
 
     setUser(user);
-    router.navigate("(auth)/(home)/home");
+    router.push("(auth)/(home)/home");
   };
 
   return (
     <View style={styles.container}>
-      <Text h2 style={styles.title}>
+      <Text h1 style={styles.h1}>
         Trail Adventures
       </Text>
-
       <Input
         label="Email"
-        placeholder="test@test.com"
+        placeholder="email"
         value={email}
-        onChangeText={setEmail}
+        onChangeText={(text) => setEmail(text)}
         autoCapitalize="none"
-        inputStyle={styles.inputText}
-        labelStyle={styles.label}
-        placeholderTextColor="#9ca3af"
-        inputContainerStyle={styles.inputContainer}
+        style={styles.input}
       />
-
       <Input
-        label="Senha"
-        placeholder="Digite sua senha"
+        label="Password"
+        placeholder="senha"
         value={password}
-        onChangeText={setPassword}
+        onChangeText={(text) => setPassword(text)}
+        style={styles.input}
         secureTextEntry
-        inputStyle={styles.inputText}
-        labelStyle={styles.label}
-        placeholderTextColor="#9ca3af"
-        inputContainerStyle={styles.inputContainer}
       />
+      <Button title="Login" onPress={handleLogin} style={styles.button} />
 
-      <Button
-        title="Entrar"
-        onPress={handleLogin}
-        buttonStyle={styles.button}
-        titleStyle={{ fontWeight: "bold", fontSize: 16 }}
-      />
-
-      <Link href="/register" style={styles.signup}>
-        <Text style={styles.signup}>Não tem uma conta? Registre-se</Text>
+      <Link href="/register">
+        <Text style={styles.signup}>Registre-se</Text>
       </Link>
     </View>
   );
@@ -82,38 +67,28 @@ export default function _screen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#121416",
-    padding: 20,
     justifyContent: "center",
+    padding: 16,
+    backgroundColor: "#121416",
   },
-  title: {
+  input: {
+    padding: 16,
     color: "#fff",
-    textAlign: "center",
-    marginBottom: 32,
-    fontWeight: "bold",
-  },
-  inputText: {
-    color: "#fff",
-    fontSize: 16,
-  },
-  label: {
-    color: "#d1d5db",
-    marginBottom: 4,
-  },
-  inputContainer: {
-    borderBottomColor: "#3f3f46",
   },
   button: {
-    backgroundColor: "#2563EB",
-    paddingVertical: 14,
-    borderRadius: 10,
+    padding: 16,
     marginTop: 16,
+    marginBottom: 16,
+  },
+  h1: {
+    color: "#fff",
+    textAlign: "center",
+    marginBottom: 24,
   },
   signup: {
-    color: "#9ca3af",
+    marginTop: 16,
     textAlign: "center",
-    marginTop: 24,
+    color: "#fff",
     textDecorationLine: "underline",
-    fontSize: 14,
   },
 });

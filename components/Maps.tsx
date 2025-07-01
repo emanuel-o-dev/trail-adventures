@@ -1,8 +1,7 @@
-import { View, Text, Alert } from "react-native";
+import { View, Text } from "react-native";
 import React from "react";
 import { ExpoLeaflet, MapLayer, MapMarker } from "expo-leaflet";
 import { MarkersSchema } from "../schemas/TrailFull";
-import { router } from "expo-router";
 
 export default function Maps({ markers }: { markers: MarkersSchema[] }) {
   const mapLayers: MapLayer[] = [
@@ -14,6 +13,7 @@ export default function Maps({ markers }: { markers: MarkersSchema[] }) {
       url: `https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png`,
     },
   ];
+  console.log(markers);
   return (
     <View className="w-full h-2/5">
       <ExpoLeaflet
@@ -36,26 +36,7 @@ export default function Maps({ markers }: { markers: MarkersSchema[] }) {
           lng: -51.469908922617115,
         }}
         zoom={14}
-        onMessage={(message) => {
-          if (message.tag == "onMapMarkerClicked") {
-            Alert.alert(
-              "Marcador Clicado",
-              `Gostaria de ver detalhes sobre: ${markers.find((m) => Number(m.id) == Number(message.mapMarkerId))?.name}`,
-              [
-                {
-                  text: "Ver detalhes",
-                  onPress: () => {
-                    router.navigate({
-                      pathname: "/(auth)/(home)/[id]",
-                      params: { id: message.mapMarkerId },
-                    });
-                  },
-                },
-                { text: "Cancelar", style: "cancel" },
-              ],
-            );
-          }
-        }}
+        onMessage={(message) => console.log("Message from map:", message)}
       />
     </View>
   );

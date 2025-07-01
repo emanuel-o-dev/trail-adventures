@@ -17,6 +17,10 @@ export default function TrailWrapper({ trails }: TrailWrapperProps) {
   const snapPoints = useMemo(() => ["60%", "90%"], []);
 
   const handleSheetChange = useCallback((index: number) => {
+    if (index === -1) {
+      sheetRef.current?.close();
+      console.log("Bottom sheet closed");
+    }
     console.log("handleSheetChange", index);
   }, []);
 

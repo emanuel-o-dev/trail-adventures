@@ -4,7 +4,7 @@
     "slug": "trail-adventures",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/trail-adventures.png",
+    "icon": "./assets/map.png",
     "userInterfaceStyle": "light",
     "newArchEnabled": true,
     "splash": {

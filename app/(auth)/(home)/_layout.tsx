@@ -9,7 +9,6 @@ export default function _layout() {
         name="[id]"
         options={{
           title: "Detalhes da trilha",
-          headerShown: true,
         }}
       />
     </Stack>
