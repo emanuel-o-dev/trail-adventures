@@ -76,11 +76,11 @@ O desenvolvimento do MyCycleApp foi dividido em 4 sprints semanais, com foco em 
 
 ### 🟠 Sprint 3 – Funcionalidades de conclusão e favoritos (Semana 3)
 
-- [ ] Adicionar funcionalidade "Marcar como concluída"  
-- [ ] Implementar opção de favoritar trilhas  
-- [ ] Criar tela de trilhas favoritas  
-- [ ] Criar tela "Minhas Trilhas" com trilhas concluídas  
-- [ ] Melhorar a interface visual e experiência do usuário  
+- [X] Adicionar funcionalidade "Marcar como concluída"  
+- [X] Implementar opção de favoritar trilhas  
+- [X] Criar tela de trilhas favoritas  
+- [X] Criar tela "Minhas Trilhas" com trilhas concluídas  
+- [X] Melhorar a interface visual e experiência do usuário  
 
 > **Meta da Sprint:** Adicionar personalização e gerenciamento de trilhas pelo usuário.
 
@@ -88,11 +88,11 @@ O desenvolvimento do MyCycleApp foi dividido em 4 sprints semanais, com foco em 
 
 ### 🔵 Sprint 4 – Testes, mapa e empacotamento (Semana 4)
 
-- [ ] Validar campos e dados com Zod  
-- [ ] Integrar mapa com localização usando Expo-Leaflet  
-- [ ] Testar o fluxo completo do app  
-- [ ] Gerar build com EAS Build (.apk para Android)  
-- [ ] Publicar APK no GitHub  
+- [X] Validar campos e dados com Zod  
+- [X] Integrar mapa com localização usando Expo-Leaflet  
+- [X] Testar o fluxo completo do app  
+- [X] Gerar build com EAS Build (.apk para Android)  
+- [X] Publicar APK no GitHub  
 - [ ] Gravar vídeo de apresentação do app  
 
 > **Meta da Sprint:** Finalizar e empacotar o aplicativo com todas as funcionalidades principais testadas.
