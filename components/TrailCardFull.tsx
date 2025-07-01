@@ -5,9 +5,12 @@ import {
   SafeAreaView,
   StyleSheet,
   ToastAndroid,
+  ActivityIndicator,
 } from "react-native";
+import * as Linking from "expo-linking";
+
 import React, { useEffect, useState } from "react";
-import { ButtonGroup, Image } from "@rneui/themed";
+import { Button } from "@rneui/themed";
 import TrailRepository from "../src/database/TrailRepository";
 import { TrailFullSchema } from "../schemas/TrailFull";
 import { useAsyncData } from "../hooks/useAsyncData";
@@ -15,6 +18,8 @@ import UserRepository from "../src/database/UserRepository";
 import useUser from "../states/useUser";
 import useSavedTrails from "../states/useSavedTrails";
 import { TrailSaved } from "../schemas/TrailSaved";
+import { Image } from "@rneui/base";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
 export default function TrailCardFull({ id }: { id: number }) {
   const { trail, loading } = useAsyncData<{ trail: TrailFullSchema }>(
@@ -27,17 +32,21 @@ export default function TrailCardFull({ id }: { id: number }) {
 
   const userId = Number(useUser().getUser()?.id);
   const { loadTrails, addTrail } = useSavedTrails();
-
   const [saving, setSaving] = useState(false);
 
+  const handleNavigate = () => {
+    const url = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(trail.name)}`;
+
+    Linking.openURL(url);
+  };
+
   useEffect(() => {
-    if (userId) {
-      loadTrails(userId);
-    }
+    if (userId) loadTrails(userId);
   }, [userId]);
 
   const handleSaveTrail = async () => {
     if (!trail || !trail.id || saving) return;
+
     setSaving(true);
 
     const parsed = TrailSaved.safeParse(trail);
@@ -48,15 +57,14 @@ export default function TrailCardFull({ id }: { id: number }) {
       return;
     }
 
-    const validTrail = parsed.data;
     const repository = new UserRepository();
-    const saved = repository.saveTrail(userId, validTrail.id);
+    const saved = repository.saveTrail(userId, trail.id);
 
     if (saved) {
       addTrail({
-        id: validTrail.id,
-        name: validTrail.name,
-        location: validTrail.location,
+        id: trail.id,
+        name: trail.name,
+        location: trail.location,
         dateVisited: new Date().toISOString(),
       });
       ToastAndroid.show("Trilha salva com sucesso!", ToastAndroid.SHORT);
@@ -70,77 +78,79 @@ export default function TrailCardFull({ id }: { id: number }) {
   if (loading) {
     return (
       <SafeAreaView style={styles.centered}>
-        <Text style={styles.loadingText}>Carregando...</Text>
+        <ActivityIndicator size="large" color="#fff" />
+        <Text style={styles.loadingText}>Carregando trilha...</Text>
       </SafeAreaView>
     );
   }
 
   return (
-    <SafeAreaView style={styles.container}>
+    <ScrollView style={styles.container}>
       <Image
-        source={{ uri: trail?.image }}
+        source={{ uri: trail.image }}
         style={{ height: 320, width: "100%" }}
-        PlaceholderContent={<Text>Loading...</Text>}
+        PlaceholderContent={<ActivityIndicator color="#fff" />}
+        resizeMode="cover"
       />
-      <ScrollView
-        style={styles.scroll}
-        showsVerticalScrollIndicator={false}
-        contentContainerStyle={{ paddingBottom: 100 }}
-      >
-        <Text style={styles.title}>{trail?.name}</Text>
+
+      <View style={styles.scroll}>
+        <Text style={styles.title}>{trail.name}</Text>
 
         <View style={styles.infoBox}>
           <Text style={styles.infoText}>
             Dificuldade: {trail.difficultyLabel}
           </Text>
-
           <Text style={styles.infoText}>Tempo estimado: {trail.duration}</Text>
           <Text style={styles.infoText}>Percurso: {trail.distance}</Text>
         </View>
 
         <Text style={styles.detail}>Tipo: {trail.terrain}</Text>
-        <Text style={styles.detail}>Localização: {trail?.location}</Text>
+        <Text style={styles.detail}>Localização: {trail.location}</Text>
         <Text style={styles.description}>{trail.description}</Text>
 
-        <View style={styles.buttonGroup}>
-          <ButtonGroup
-            buttons={["Salvar", "Navegar"]}
-            containerStyle={styles.buttonGroupContainer}
-            buttonContainerStyle={styles.buttonContainer}
-            selectedButtonStyle={styles.selectedButton}
-            selectedIndex={1}
-            onPress={(index) => {
-              if (index === 0) {
-                handleSaveTrail();
-              } else if (index === 1) {
-                console.log("Start trail!");
-              }
+        <View style={styles.actions}>
+          <Button
+            title="Salvar Trilha"
+            loading={saving}
+            onPress={handleSaveTrail}
+            buttonStyle={styles.saveButton}
+            titleStyle={{ fontWeight: "bold" }}
+          />
+          <Button
+            title="Navegar no Google Maps"
+            onPress={handleNavigate}
+            buttonStyle={{ backgroundColor: "#10b981", borderRadius: 10 }}
+            containerStyle={{ marginTop: 10 }}
+            icon={{
+              name: "map-marker",
+              type: "font-awesome",
+              color: "white",
             }}
-            disabled={saving}
           />
         </View>
-      </ScrollView>
-    </SafeAreaView>
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#18181b", // bg-zinc-900
+    backgroundColor: "#18181b",
   },
   centered: {
     flex: 1,
-    backgroundColor: "#18181b",
     justifyContent: "center",
     alignItems: "center",
+    backgroundColor: "#18181b",
   },
   loadingText: {
     color: "#fff",
+    marginTop: 10,
   },
   scroll: {
     flex: 1,
-    padding: 16,
+    padding: 12,
   },
   title: {
     color: "#fff",
@@ -149,20 +159,18 @@ const styles = StyleSheet.create({
     marginBottom: 8,
   },
   infoBox: {
-    backgroundColor: "#18181b",
+    backgroundColor: "#1f2937",
     borderRadius: 8,
-    padding: 8,
-    shadowColor: "#000",
-    shadowOpacity: 0.1,
-    shadowRadius: 6,
+    padding: 10,
+    marginBottom: 8,
   },
   infoText: {
-    color: "#d1d5db", // text-gray-300
+    color: "#d1d5db",
     fontSize: 16,
     marginBottom: 4,
   },
   detail: {
-    color: "#9ca3af", // text-gray-400
+    color: "#9ca3af",
     fontSize: 16,
     marginTop: 8,
   },
@@ -171,21 +179,12 @@ const styles = StyleSheet.create({
     marginTop: 8,
     fontSize: 16,
   },
-  buttonGroup: {
-    marginTop: 16,
+  actions: {
+    marginTop: 20,
   },
-  buttonGroupContainer: {
-    height: 50,
-    backgroundColor: "transparent",
-    borderColor: "transparent",
-    gap: 10,
-  },
-  buttonContainer: {
+  saveButton: {
+    backgroundColor: "#2563EB",
     borderRadius: 10,
-    backgroundColor: "#fff",
-  },
-  selectedButton: {
-    backgroundColor: "#2563EB", // azul
-    borderRadius: 10,
+    paddingVertical: 12,
   },
 });
