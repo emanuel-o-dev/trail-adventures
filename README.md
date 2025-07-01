@@ -11,7 +11,7 @@ O app visa promover o contato com o meio ambiente, apoiar a prática de exercíc
 
 - [x] Criação do repositório e estruturação inicial
 - [x] Protótipo de interface no Figma
-- [ ] Modelagem do banco de dados local
+- [X] Modelagem do banco de dados local
 - [x] Planejamento de sprints
 
 ### Funcionalidades previstas
