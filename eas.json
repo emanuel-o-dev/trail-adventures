@@ -8,7 +8,7 @@
       "android": {
         "buildType": "apk"
       },
-      "channel": "apk"
+      "channel": "preview"
     },
     "development": {
       "developmentClient": true,
