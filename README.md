@@ -17,8 +17,8 @@ O app visa promover o contato com o meio ambiente, apoiar a prática de exercíc
 ### Funcionalidades previstas
 
 - [X] Listagem de trilhas com informações (nome, localização, dificuldade, descrição)
-- [ ] Visualização da trilha em mapa com rota
-- [ ] Marcar trilha como concluída
+- [X] Visualização da trilha em mapa com rota
+- [X] Marcar trilha como concluída
 - [ ] Favoritar trilhas para acesso rápido
 - [ ] Integração com localização do usuário (GPS)
 - [ ] Compartilhar trilhas com amigos
